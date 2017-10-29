@@ -1,0 +1,16 @@
+aws configuration lives in /aws-config.json
+
+modules needed are:
+1. const multipart = require('connect-multiparty')
+2. const multipartMiddleware = multipart()
+3. const Upload = require('upload.server.controller')
+
+
+to display form call Upload.displayForm
+to upload photo, run upload.Photo
+
+define bucket in bucketName variable
+
+
+image name is passed into createItemObject function as ${imageName}
+image is passed in as image
