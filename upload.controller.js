@@ -55,7 +55,7 @@ const createItemObject = (callback) => {
 	})
 }
 exports.upload = (req, res, next) => {
-  console.log(req.files);
+  console.log(req.body);
   // define path to file from input
 	var tmp_path = req.files.file.path;
 

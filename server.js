@@ -113,6 +113,9 @@ app.post('/items/new-item', upload.array('photos', 5), function (req, res, next)
   // req.body contains the text fields
 });
 
+app.get('/upload', Upload.displayForm)
+app.post('/upload', multipartMiddleware, Upload.upload)
+
 const MongoClient = require('mongodb').MongoClient
 
 MongoClient.connect('mongodb://kevin:Bettyb00p!@hiapp-shard-00-00-fqbin.mongodb.net:27017,hiapp-shard-00-01-fqbin.mongodb.net:27017,hiapp-shard-00-02-fqbin.mongodb.net:27017/test?ssl=true&replicaSet=HiApp-shard-0&authSource=admin', (err, database) => {
