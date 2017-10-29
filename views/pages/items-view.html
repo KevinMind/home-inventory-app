@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+<!-- ###################################################################### -->
+<!--                                 HEAD                                   -->
+
+{% block head %}
+{{ super() }}
+
+{% endblock%}
+
+<!-- ###################################################################### -->
+<!--                                 HEADER                                 -->
+{% block header%}
+{{ super() }}
+
+{% endblock %}
+
+<!-- ###################################################################### -->
+<!--                                 BODY                                   -->
+
+{% block body %}
+<div class="container-fluid">
+  <p>hello {{name}}</p>
+
+  <img src="/static/img/6a9b7376f0c30c62cda1f8815d1386241509145736147.png" alt="" width="40" height="auto">
+  <table class="bordered">
+     <thead>
+       <tr>
+           <th>Name</th>
+           <th>Quantity</th>
+           <th>Photo</th>
+       </tr>
+     </thead>
+     <tbody>
+       {% for item in items %}
+         <tr>
+           <td>{{item.name}}</td>
+           <td>{{item.quantity}}</td>
+           <td>
+             {% for photo in item.photos %}
+              <img src="/{{photo.path}}" alt="" width="30" height="auto">
+              {% else %}
+              <p>no photos</p>
+             {% endfor %}
+           </td>
+         </tr>
+       {% else %}
+       <tr>
+        There are no items
+       </tr>
+       {% endfor %}
+
+     </tbody>
+   </table>
+</div>
+{% endblock%}
+
+<!-- ###################################################################### -->
+<!--                                 ENDTEMPLATE                            -->
