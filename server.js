@@ -65,7 +65,8 @@ const MongoClient = require('mongodb').MongoClient
 MongoClient.connect(process.env.MONGO_DB_URL, (err, database) => {
   if(err) return console.log(err)
   db = database
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-  });
 })
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
