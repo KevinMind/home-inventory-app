@@ -2,9 +2,8 @@ var express = require( 'express' );
 var nunjucks = require( 'nunjucks' );
 var request = require('request');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load();
-}
+require('dotenv').load();
+
 
 var app = express();
 var TEMPLATES_PATH = './views'
