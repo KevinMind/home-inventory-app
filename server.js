@@ -58,7 +58,7 @@ app.post('/items/new-item', multipartMiddleware, Upload.upload)
 
 // Connect to DB and start app
 const MongoClient = require('mongodb').MongoClient
-MongoClient.connect('mongodb://kevin:Bettyb00p!@hiapp-shard-00-00-fqbin.mongodb.net:27017,hiapp-shard-00-01-fqbin.mongodb.net:27017,hiapp-shard-00-02-fqbin.mongodb.net:27017/test?ssl=true&replicaSet=HiApp-shard-0&authSource=admin', (err, database) => {
+MongoClient.connect(process.env.MONGO_DB_URL, (err, database) => {
   if(err) return console.log(err)
   db = database
   app.listen( 8080 ) ;
