@@ -1,105 +1,117 @@
-<form class="" method="post" action='/items/new-item' enctype="multipart/form-data">
-  <!-- JQUERY STEPPER https://kinark.github.io/Materialize-stepper/?email=kmeinhardt7%40gmail.com&password=wdfsldkfjlkj#! -->
-  <div class="form-section">
-    <!-- name -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input placeholder="Placeholder" name="name" type="text" autofocus>
-        <label for="name">Item Name</label>
+<!-- Got express to upload image: now import our form logic and mongo db insertion to upload.controller file, remember to pass link for s3 image.  -->
+<div class="section">
+  <div class="container">
+    <form class="" method="post" action='/items/new-item' enctype="multipart/form-data">
+      <!-- JQUERY STEPPER https://kinark.github.io/Materialize-stepper/?email=kmeinhardt7%40gmail.com&password=wdfsldkfjlkj#! -->
+      <div class="form-section">
+        <!-- name -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="Placeholder" name="name" type="text" autofocus>
+            <label for="name">Item Name</label>
+          </div>
+        </div>
+        <!-- quantity -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="quantity" type="number" class="validate">
+            <label for="quantity">Quantity</label>
+          </div>
+        </div>
+        <!-- room -->
+        <div class="row">
+          <div class="input-field col s12">
+            <select name="room" id="roomSelect">
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+            </select>
+            <label>Materialize Select</label>
+          </div>
+        </div>
+        <!-- photos -->
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>File</span>
+            <input type="file" name="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload one or more files">
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- quantity -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="quantity" type="number" class="validate">
-        <label for="quantity">Quantity</label>
+      <div class="form-section">
+        <!-- length -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="length" type="number" class="validate">
+            <label for="length">Length</label>
+          </div>
+        </div>
+        <!-- width -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="width" type="number" class="validate">
+            <label for="width">Width</label>
+          </div>
+        </div>
+        <!-- height -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="height" type="number" class="validate">
+            <label for="height">Height</label>
+          </div>
+        </div>
+        <!-- age -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="age" type="number" class="validate">
+            <label for="age">Age</label>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- room -->
-    <div class="row">
-      <div class="input-field col s12">
-        <select name="room" id="roomSelect">
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
-          <option value="4">Option 4</option>
-        </select>
-        <label>Materialize Select</label>
+      <div class="form-section">
+        <!-- store -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="store" type="text" class="validate">
+            <label for="store">Store</label>
+          </div>
+        </div>
+        <!-- brand -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="brand" type="text" class="validate">
+            <label for="brand">Brand</label>
+          </div>
+        </div>
+        <!-- model -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="model" type="text" class="validate">
+            <label for="model">Mode #</label>
+          </div>
+        </div>
+        <!-- serial -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="serial" type="text" class="validate">
+            <label for="serial">Serial #</label>
+          </div>
+        </div>
+        <!-- replacementCost -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="cost" type="text" class="validate">
+            <label for="cost">Cost</label>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- photos -->
-    <div class="file-field input-field">
-      <div class="btn">
-        <span>File</span>
-        <input type="file" multiple name="photos">
-      </div>
-      <div class="file-path-wrapper">
-        <input class="file-path validate" type="text" placeholder="Upload one or more files">
-      </div>
-    </div>
+      <button class="waves-effect waves-light btn">Save For Later</button>
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
   </div>
-  <div class="form-section">
-    <!-- length -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="length" type="number" class="validate">
-        <label for="length">Length</label>
-      </div>
-    </div>
-    <!-- width -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="width" type="number" class="validate">
-        <label for="width">Width</label>
-      </div>
-    </div>
-    <!-- height -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="height" type="number" class="validate">
-        <label for="height">Height</label>
-      </div>
-    </div>
-  </div>
-  <div class="form-section">
-    <!-- store -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="store" type="text" class="validate">
-        <label for="store">Store</label>
-      </div>
-    </div>
-    <!-- brand -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="brand" type="text" class="validate">
-        <label for="brand">Brand</label>
-      </div>
-    </div>
-    <!-- model -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="model" type="text" class="validate">
-        <label for="model">Mode #</label>
-      </div>
-    </div>
-    <!-- serial -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="serial" type="text" class="validate">
-        <label for="serial">Serial #</label>
-      </div>
-    </div>
-    <!-- replacementCost -->
-    <div class="row">
-      <div class="input-field col s12">
-        <input name="cost" type="text" class="validate">
-        <label for="cost">Cost</label>
-      </div>
-    </div>
-  </div>
-  <button class="waves-effect waves-light btn">Save For Later</button>
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
-</form>
+</div>

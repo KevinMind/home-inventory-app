@@ -1,3 +1,107 @@
 h1 {
   color: green;
 }
+
+nav {
+  box-shadow: none;
+}
+
+/* FLEXBOX LAYOUT */
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex .col {
+  flex-grow: 1;
+}
+
+/* HELPERS */
+
+.m0 {
+  margin: 0;
+}
+
+/*TABLE LAYOUT*/
+
+.table {
+  display: table;
+  width: 100%;
+}
+
+.cell {
+  display: table-cell;
+  padding: 0;
+}
+
+.cell.main {
+  width: 75%;
+}
+
+.cell.sidebar {
+  width: 25%
+}
+
+@media (max-width: 650px) {
+  .cell.main, .cell.sidebar {
+    width: 100% !important;
+  }
+
+ }
+
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* ITEM TABLE*/
+
+.item-body {
+  height: 85vh;
+}
+
+.item-list__menu .title {
+  font-size: 2rem;
+}
+
+
+.item-title {
+  color: blue;
+  flex-grow: 3;
+}
+
+.item-quantity {
+  color: green;
+  flex-grow: 1;
+}
+
+.item-image-container {
+  padding: 5px;
+}
+
+.item-fullimage {
+  padding: .2rem;
+}
+
+.item-thumbnail-image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.item-full-image img {
+  width: 100%;
+  mx-width: 400px;
+}
+
+.item-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.item-buttons a, button {
+  margin-right: 1rem;
+}
