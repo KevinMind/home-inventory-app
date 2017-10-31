@@ -62,7 +62,7 @@ const PORT = process.env.PORT || 8080;
 
 // Connect to DB and start app
 const MongoClient = require('mongodb').MongoClient
-MongoClient.connect(process.env.MONGO_DB_URL, (err, database) => {
+MongoClient.connect(process.env.MONGO_DB_URI, (err, database) => {
   if(err) return console.log(err)
   db = database
 })
