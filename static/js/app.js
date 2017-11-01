@@ -7,20 +7,20 @@ $(document).ready(function() {
   console.log("done collapisifying.");
 
 
-$(".list-item").click(function(event) {
-
+$(".collapsible-header").click(function(event) {
+  if($(this).parent().hasClass("active")) {
+    console.log("is active..");
+  } else {
     let id = $(this).data("scroll");
     let destination = document.getElementById(id);
     let height = $("#item-list-header").height();
 
     setTimeout(function() {
       $('html, body').animate({
-          scrollTop: ($(destination).position().top - 70)
+          scrollTop: ($(destination).position().top - 50)
       }, 300);
-      console.log(height);
-      console.log(destination)
-    }, 300, [destination, height]);
-
+    }, 600, [destination, height]);
+  }
 
 });
 
