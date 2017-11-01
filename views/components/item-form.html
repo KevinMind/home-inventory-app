@@ -1,7 +1,7 @@
 <!-- Got express to upload image: now import our form logic and mongo db insertion to upload.controller file, remember to pass link for s3 image.  -->
 <div class="section">
   <div class="container">
-    <form class="" method="post" action='/items/new-item' enctype="multipart/form-data">
+    <form class="" method="post" action='/new-item' enctype="multipart/form-data">
       <!-- JQUERY STEPPER https://kinark.github.io/Materialize-stepper/?email=kmeinhardt7%40gmail.com&password=wdfsldkfjlkj#! -->
       <div class="form-section">
         <!-- name -->
@@ -34,7 +34,7 @@
         <div class="file-field input-field">
           <div class="btn">
             <span>File</span>
-            <input type="file" name="file">
+            <input type="file" name="file" required>
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload one or more files">

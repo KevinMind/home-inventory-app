@@ -18,34 +18,36 @@
 <!--                                 BODY                                   -->
 
 {% block body %}
-<div class="table">
+<div class="container-fluid">
+  <div class="table height-window">
   <div class="cell main">
     <!-- FLOATING HEADER -->
-    <div class="d-flex sticky grey lighten-5 collapsible-header item-list-header" id="item-list-header">
-      <div class="col">Name</div>
-      <div class="col">Room</div>
-      <div class="col">Quantity</div>
-      <div class="col">Image</div>
+    <div class="row sticky grey lighten-3 collapsible-header item-list-header" id="item-list-header">
+      <div class="col s3">Name <span id="itemNameHead"></span></div>
+      <div class="col s3">Room <span id="itemRoomHead"></span></div>
+      <div class="col s3">Quantity <span id="itemQuantityHead"></span></div>
+      <div class="col s3">Image</div>
     </div>
     <ul class="collapsible m0" data-collapsible="accordion">
      {% for item in items %}
      <li class="list-item">
-       <div class="collapsible-header d-flex item-list-header" id="{{item._id}}" data-scroll="{{item._id}}">
-         <div class="col ">{{item.name}}</div>
-         <div class="col">{{item.room}}</div>
-         <div class="col">{{item.quantity}}</div>
-         <div class="col">
-             <img height="40" width="auto" class="circle" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+       <div class="collapsible-header row item-list-header" id="{{item.uuid}}" data-scroll="{{item.uuid}}">
+         <div class="col s3 itemName">{{item.name}}</div>
+         <div class="col s3 itemRoom">{{item.room}}</div>
+         <div class="col s3 itemQuant">{{item.quantity}}</div>
+         <div class="col s3 item-image-container">
+           <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
          </div>
        </div>
        <div class="collapsible-body item-body">
            <div class="row">
-             <div class="col s12 m8">
-                <table class="highlight">
+             <div class="col s12 m6">
+               <h5>Item Details:</h5>
+                <table class="bordered">
                   <tbody>
                     <tr>
                       <td>Dimensions: </td>
-                      <td>{{item.length}}" x {{item.width}}" x {{item.height}}</td>
+                      <td>{{item.length}}" x {{item.width}}" x {{item.height}}""</td>
                     </tr>
                     <tr>
                       <td>Age:</td>
@@ -71,11 +73,11 @@
                   </tbody>
                 </table>
              </div>
-             <div class="col s12 m4 show-on-medium-and-up item-full-image">
-               <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+             <div class="col s12 m6 item-full-image">
+               <img class="responsive-img z-depth-1" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
                <div class="item-buttons">
-                 <a class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">edit</i></a>
-                 <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light orange btn"><i class="material-icons right">edit</i>edit</a>
+                 <a href="/delete/{{item.uuid}}" class="waves-effect waves-light red btn"><i class="material-icons right">delete</i>delete</a>
               </div>
              </div>
            </div>
@@ -84,26 +86,17 @@
      {% else %}
      <div class="">
        <h3>No Items Yet.</h3>
-       <a href="/items/new-item">Add an Item</a>
+       <a href="/new-item">Add an Item</a>
      </div>
      {% endfor %}
    </ul>
   </div>
-  <div class="cell sidebar hide-on-med-and-down">
+  <div class="cell sidebar hide-on-med-and-down grey lighten-3 z-depth-1">
     <div class="sticky">
     </div>
   </div>
 </div>
-<div class="fixed-action-btn toolbar">
-  <a class="btn-floating btn-large green">
-    <i class="large material-icons">add</i>
-  </a>
-  <ul>
-    <li class="waves-effect waves-light"><a href="/items/new-item">Add New Item</a></li>
-
-  </ul>
 </div>
-
 {% endblock%}
 
 <!-- ###################################################################### -->

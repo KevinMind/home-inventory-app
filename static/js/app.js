@@ -5,6 +5,8 @@ $(document).ready(function() {
   console.log("done selectifying.")
   $('.collapsible').collapsible();
   console.log("done collapisifying.");
+  $(".button-collapse").sideNav();
+  console.log("done mobilifying")
 
 
 $(".collapsible-header").click(function(event) {
@@ -12,6 +14,8 @@ $(".collapsible-header").click(function(event) {
     console.log("is active..");
   } else {
     let id = $(this).data("scroll");
+    let name = $(this).find(".itemName").val();
+    console.log(name)
     let destination = document.getElementById(id);
     let height = $("#item-list-header").height();
 

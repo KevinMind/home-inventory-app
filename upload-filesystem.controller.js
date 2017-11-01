@@ -22,7 +22,7 @@ var mime = require('mime');
 // var upload = multer({ storage: storage });
 
 
-// app.post('/items/new-item', upload.array('photos', 5), function (req, res, next) {
+// app.post('/new-item', upload.array('photos', 5), function (req, res, next) {
 //   console.log(req.files);
 //   if(req.files !==  undefined){
 //   // once uploaded save the user data along with uploaded photo path to the database.

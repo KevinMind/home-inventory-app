@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+<!-- ###################################################################### -->
+<!--                                 HEAD                                   -->
+
+{% block head %}
+{{ super() }}
+
+{% endblock%}
+
+<!-- ###################################################################### -->
+<!--                                 HEADER                                 -->
+{% block header%}
+{{ super() }}
+
+{% endblock %}
+
+<!-- ###################################################################### -->
+<!--                                 BODY                                   -->
+
+{% block body %}
+<div class="section">
+  <div class="row">
+    <div class="col s12 m8">
+      <form class="" action="/items/{{item.uuid}}" method="post">
+         <div class="row">
+           <!-- Name -->
+           <div class="row">
+             <div class="col s12">
+               <div class="input-field">
+                 <input type="text" name="name" value="{{item.name}}">
+                 <label for="name">Name</label>
+               </div>
+             </div>
+           </div>
+           <!-- quantity -->
+           <div class="row">
+             <div class="col s12">
+               <div class="input-field">
+                 <input type="number" name="quantity" value="{{item.quantity}}">
+                 <label for="quantity">Quantity</label>
+               </div>
+             </div>
+           </div>
+           <!-- room -->
+           <div class="row">
+             <div class="input-field col s12">
+               <select name="room" id="roomSelect">
+                 <option value="1">Option 1</option>
+                 <option value="2">Option 2</option>
+                 <option value="3">Option 3</option>
+                 <option value="4">Option 4</option>
+               </select>
+               <label>Materialize Select</label>
+             </div>
+           </div>
+            <!-- dimensions -->
+             <div class="row">
+               <div class="input-field inline">
+                <input type="number" name="length" value="{{item.length}}">
+                <label for="length">Length</label>
+               </div>
+               <div class="input-field inline">
+                 <input type="number" name="width" value="{{item.width}}">
+                 <label for="width">Width</label>
+               </div>
+               <div class="input-field inline">
+                 <input type="number" name="height" value="{{item.height}}">
+                 <label for="height">Height</label>
+               </div>
+             </div>
+             <!-- age -->
+             <div class="row">
+               <div class="col s12">
+                 <div class="input-field">
+                   <input type="number" name="age" value="{{item.age}}">
+                   <label for="age">Age</label>
+                 </div>
+               </div>
+             </div>
+             <!-- Store -->
+             <div class="row">
+               <div class="col s12">
+                 <div class="input-field">
+                   <input type="text" name="store" value="{{item.store}}">
+                   <label for="store">Store</label>
+                 </div>
+               </div>
+             </div>
+             <!-- Brand -->
+             <div class="row">
+               <div class="col s12">
+                 <div class="input-field">
+                   <input type="text" name="brand" value="{{item.brand}}">
+                   <label for="brand">Brand</label>
+                 </div>
+               </div>
+             </div>
+             <!-- Model -->
+             <div class="row">
+               <div class="col s12">
+                 <div class="input-field">
+                   <input type="text" name="model" value="{{item.model}}">
+                   <label for="model">Model</label>
+                 </div>
+               </div>
+             </div>
+             <!-- Serial -->
+             <div class="row">
+               <div class="col s12">
+                 <div class="input-field">
+                   <input type="text" name="serial" value="{{item.serial}}">
+                   <label for="serial">Serial</label>
+                 </div>
+               </div>
+             </div>
+             <!-- Cost -->
+             <div class="row">
+               <div class="input-field col s12">
+                 <input name="cost" type="text" class="validate" value="{{item.cost}}">
+                 <label for="cost">Cost</label>
+               </div>
+             </div>
+             <button class="btn waves-effect waves-light" type="submit" name="action">Update
+               <i class="material-icons right">send</i>
+             </button>
+         </div>
+      </form>
+    </div>
+    <div class="col s12 m4 show-on-medium-and-up item-full-image">
+      <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+    </div>
+  </div>
+</div>
+{% endblock%}
+
+<!-- ###################################################################### -->
+<!--                                 ENDTEMPLATE                            -->
