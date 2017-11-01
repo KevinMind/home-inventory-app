@@ -20,7 +20,7 @@
 {% block body %}
 <div class="table">
   <div class="cell main">
-    <div class="d-flex sticky grey lighten-5 collapsible-header" id="item-list-header">
+    <div class="d-flex sticky grey lighten-5 collapsible-header item-list-header" id="item-list-header">
       <div class="col">Name</div>
       <div class="col">Room</div>
       <div class="col">Quantity</div>
@@ -29,7 +29,7 @@
     <ul class="collapsible m0" data-collapsible="accordion">
      {% for item in items %}
      <li class="list-item" data-scroll="{{item._id}}">
-       <div class="collapsible-header d-flex" id="{{item._id}}">
+       <div class="collapsible-header d-flex item-list-header" id="{{item._id}}">
          <div class="col ">{{item.name}}</div>
          <div class="col">{{item.room}}</div>
          <div class="col">{{item.quantity}}</div>

@@ -49,13 +49,18 @@ nav {
 
  }
 
-
 .sticky {
   position: sticky;
   top: 0;
 }
 
 /* ITEM TABLE*/
+
+.item-list-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
 
 .item-body {
   height: 85vh;
