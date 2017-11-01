@@ -28,6 +28,17 @@ $(".collapsible-header").click(function(event) {
 
 });
 
+var stickySidebar = $('.sticky').offset().top;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() > stickySidebar) {
+        $('#item-list-header').addClass('fixed');
+    }
+    else {
+        $('#item-list-header').removeClass('fixed');
+    }
+});
+
 
 
 

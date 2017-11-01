@@ -41,6 +41,13 @@
        </div>
        <div class="collapsible-body item-body">
            <div class="row">
+             <div class="col s12 m6 item-full-image">
+               <img class="responsive-img z-depth-1" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+               <div class="item-buttons">
+                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light orange btn"><i class="material-icons right">edit</i>edit</a>
+                 <a href="/delete/{{item.uuid}}" class="waves-effect waves-light red btn"><i class="material-icons right">delete</i>delete</a>
+              </div>
+             </div>
              <div class="col s12 m6">
                <h5>Item Details:</h5>
                 <table class="bordered">
@@ -72,13 +79,6 @@
                     </tr>
                   </tbody>
                 </table>
-             </div>
-             <div class="col s12 m6 item-full-image">
-               <img class="responsive-img z-depth-1" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
-               <div class="item-buttons">
-                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light orange btn"><i class="material-icons right">edit</i>edit</a>
-                 <a href="/delete/{{item.uuid}}" class="waves-effect waves-light red btn"><i class="material-icons right">delete</i>delete</a>
-              </div>
              </div>
            </div>
         </div>
