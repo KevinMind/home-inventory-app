@@ -20,6 +20,7 @@
 {% block body %}
 <div class="table">
   <div class="cell main">
+    <!-- FLOATING HEADER -->
     <div class="d-flex sticky grey lighten-5 collapsible-header item-list-header" id="item-list-header">
       <div class="col">Name</div>
       <div class="col">Room</div>
@@ -34,26 +35,48 @@
          <div class="col">{{item.room}}</div>
          <div class="col">{{item.quantity}}</div>
          <div class="col">
-           <div class="item-image-cntainer">
-             <!-- <img class="item-thumbnail-image" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt=""> -->
-           </div>
+             <img height="40" width="auto" class="circle" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
          </div>
        </div>
-       <div class="collapsible-body grey lighten-4 item-body">
+       <div class="collapsible-body item-body">
            <div class="row">
-             <div class="col s12 m8">
-                 <p>Dimensions: {{item.length}}" x {{item.width}}" x {{item.height}}"</p>
-                 <p>Store: {{item.store}}</p>
-                 <p>Brand: {{item.brand}}</p>
-                 <p>Model: {{item.model}}</p>
-                 <p>Serial: {{item.serial}}</p>
-                 <div class="item-buttons">
-                   <a class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Edit</a>
-                   <a class="waves-effect waves-light red btn"><i class="material-icons left">cloud</i>Delete</a>
-                </div>
-             </div>
              <div class="col s12 m4 show-on-medium-and-up item-full-image">
-               <img class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+               <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+               <div class="item-buttons">
+                 <a class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+                 <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+              </div>
+             </div>
+             <div class="col s12 m8">
+                <table class="highlight">
+                  <tbody>
+                    <tr>
+                      <td>Dimensions: </td>
+                      <td>{{item.length}}" x {{item.width}}" x {{item.height}}</td>
+                    </tr>
+                    <tr>
+                      <td>Age:</td>
+                      <td>{{item.age}}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Store: </td>
+                      <td>{{item.store}}</td>
+                    </tr>
+                    <tr>
+                      <td>Brand: </td>
+                      <td>{{item.brand}}</td>
+                    </tr>
+                    <tr>
+                      <td>Model: </td>
+                      <td>{{item.model}}</td>
+                    </tr>
+                    <tr>
+                      <td>Serial: </td>
+                      <td>{{item.serial}}</td>
+                    </tr>
+                  </tbody>
+                </table>
              </div>
            </div>
         </div>
@@ -72,14 +95,12 @@
   </div>
 </div>
 <div class="fixed-action-btn toolbar">
-  <a class="btn-floating btn-large red">
-    <i class="large material-icons">mode_edit</i>
+  <a class="btn-floating btn-large green">
+    <i class="large material-icons">add</i>
   </a>
   <ul>
-    <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
-    <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">format_quote</i></a></li>
-    <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
-    <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>
+    <li class="waves-effect waves-light"><a href="/items/new-item">Add New Item</a></li>
+
   </ul>
 </div>
 

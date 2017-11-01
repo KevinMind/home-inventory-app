@@ -15,7 +15,7 @@ $(".list-item").click(function(event) {
 
     setTimeout(function() {
       $('html, body').animate({
-          scrollTop: ($(destination).position().top - 70)
+          scrollTop: ($(destination).position().top - 50)
       }, 300);
       console.log(height);
       console.log(destination)
