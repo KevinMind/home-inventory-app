@@ -34,6 +34,10 @@ html body {
   position: fixed;
 }
 
+.item-list-header.fixed {
+  width: 100%;
+}
+
 /*TABLE LAYOUT*/
 
 .table {
