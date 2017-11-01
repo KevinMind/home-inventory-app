@@ -1,1 +1,0 @@
-process.env.MONGO_DB_URL = 'mongodb://kevin:Bettyb00p!@hiapp-shard-00-00-fqbin.mongodb.net:27017,hiapp-shard-00-01-fqbin.mongodb.net:27017,hiapp-shard-00-02-fqbin.mongodb.net:27017/test?ssl=true&replicaSet=HiApp-shard-0&authSource=admin';
