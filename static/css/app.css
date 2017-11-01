@@ -59,6 +59,7 @@ nav {
 .item-list-header {
   display: flex;
   align-items: center;
+  z-index: 2;
 }
 
 .collapsible {
@@ -104,8 +105,8 @@ nav {
 }
 
 .item-full-image img {
-  width: 100%;
-  mx-width: 400px;
+  max-height: 200px;
+  margin: 0 auto;
 }
 
 .item-buttons {
