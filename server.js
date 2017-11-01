@@ -10,7 +10,7 @@ var app = express();
 var TEMPLATES_PATH = './views'
 
 
-const Upload = require('./upload.controller')
+const Upload = require('./controller/upload.controller')
 const multipart = require('connect-multiparty')
 const multipartMiddleware = multipart()
 
