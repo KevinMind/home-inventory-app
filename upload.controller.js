@@ -1,18 +1,16 @@
 const AWS = require('aws-sdk')
+const awsConfig = require('aws-config')
 const async = require('async')
 const bucketName = "uploads.hiapp.io"
 const path = require('path')
 const fs = require('fs')
 let pathParams, image, imageName;
 
-/** Load Config File */
-AWS.config.loadFromPath('config.json')
-
-/** After config file load, create object for s3*/
-const s3 = new AWS.S3({
-  region: 'us-east-1'
-})
-
+var s3 = new AWS.S3(awsConfig({
+  accessKeyId: process.env.AWS_ACCESS_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_REGION
+}));
 
 // Creates Bucket
 const createMainBucket = (callback) => {
