@@ -42,10 +42,12 @@
        <div class="collapsible-body item-body">
            <div class="row">
              <div class="col s12 m6 item-full-image">
-               <img class="responsive-img z-depth-1" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+               <div class="image-container z-depth-1">
+                <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+               </div>
                <div class="item-buttons">
-                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light orange btn"><i class="material-icons right">edit</i>edit</a>
-                 <a href="/delete/{{item.uuid}}" class="waves-effect waves-light red btn"><i class="material-icons right">delete</i>delete</a>
+                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light  btn orange lighten-2">edit</a>
+                 <button data-id="{{item.uuid}}" class="waves-effect waves-light  btn red lighten-1 deleteModal">delete</button>
               </div>
              </div>
              <div class="col s12 m6">
@@ -97,6 +99,7 @@
   </div>
 </div>
 </div>
+{% include 'components/delete-modal.html'%}
 {% endblock%}
 
 <!-- ###################################################################### -->

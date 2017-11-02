@@ -68,9 +68,17 @@ module.exports = (function() {
   });
 
   // DELETE ITEM
-  router.delete('/item', function (req, res) {
-    res.send('Got a DELETE request at /item: ');
-  })
+  router.get('/delete/:slug', function (req, res) {
+    console.log("Delete request received.")
+    db.collection('items').findOne({uuid : req.params.slug}, function(err, document) {
+      if(err) {
+        console.log(err)
+      } else {
+        res.render('pages/deleted.html', {"item": document})
+        // db.collection('items').remove({uuid:req.params.slug})
+      }
+    });
+  });
 
   // CREATE ITEM
   router.post('/new-item', multipartMiddleware, Upload.newItem)

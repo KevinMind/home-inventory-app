@@ -18,12 +18,20 @@
 <!--                                 BODY                                   -->
 
 {% block body %}
-<div class="section">
-  <div class="row">
-    <h1>Add</h1>
+
+<div class="container center-align">
+  <h2>Successfully Deleted {{item.name}}</h2>
+  <div class="">
+    <p>Say goodbye...</p>
+    <div class="item-buttons">
+      <a href="/items" class="waves-effect waves-light btn">Return to Items</a>
+      <a href="/new-item" class="waves-effect waves-light btn">Add a New Item</a>
+
+    </div>
+    <img src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="" width="300">
   </div>
-  {% include 'components/item-form.html'%}
 </div>
+
 {% endblock%}
 
 <!-- ###################################################################### -->

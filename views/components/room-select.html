@@ -1,0 +1,26 @@
+<!-- room -->
+<div class="row">
+  <div class="input-field col s12">
+    <select name="room" id="roomSelect">
+      <option value="" disabled selected><a href="modal1">Select a Room</a></option>
+      {% for room in rooms %}
+      <option value="{{room._id}}">{{room.name}}</option>
+      {% endfor %}
+      <option value="0">Add a room +</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet">
+  <form class="" action="/new-room" method="post">
+  <div class="modal-content">
+    <h6>Add New Room</h6>
+      <input type="text" name="name" value="">
+  </div>
+  <div class="modal-footer">
+    <button type="button" name="button" class="modal-action modal-close waves-effect waves-green btn-flat">Nevermind</button>
+    <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add Room</button>
+  </div>
+  </form>
+</div>

@@ -7,6 +7,12 @@ $(document).ready(function() {
   console.log("done collapisifying.");
   $(".button-collapse").sideNav();
   console.log("done mobilifying")
+  $('.parallax').parallax();
+  $('.modal').modal({
+    opacity: .5, // Opacity of modal background
+    startingTop: "5%",
+    endingTop: "25%"
+  });
 
 
 $(".collapsible-header").click(function(event) {
@@ -26,6 +32,19 @@ $(".collapsible-header").click(function(event) {
     }, 600, [destination, height]);
   }
 
+});
+
+$(".deleteModal").click(function(event) {
+  let target = "/delete/" + $(this).data('id');
+  $("#deleteTarget").attr("href", target);
+  console.log(target)
+  $('.modal').modal('open');
+})
+
+$( "#roomSelect" ).change(function(event) {
+  if($(this).val() == 0) {
+    $('#modal1').modal('open');
+  }
 });
 
 var stickySidebar = $('.sticky').offset().top;
