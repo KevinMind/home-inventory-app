@@ -1,9 +1,17 @@
 h1 {
-  color: green;
+  font-size: 3rem;
 }
 
 nav {
-  box-shadow: none;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1)
+}
+
+.text-shadow {
+  text-shadow: 2px 3px 5px rgba(2, 2, 2, 0.2);
+}
+
+.parallax-container {
+  background: rgba(0, 0, 0, 0.15);
 }
 
 html body {
@@ -115,6 +123,10 @@ html body {
   padding: 5px;
   overflow: hidden;
   max-width: 100%;
+}
+
+.image-container {
+  border: 1rem solid white;
 }
 
 .item-full-image {

@@ -18,23 +18,12 @@
             <label for="quantity">Quantity</label>
           </div>
         </div>
-        <!-- room -->
-        <div class="row">
-          <div class="input-field col s12">
-            <select name="room" id="roomSelect">
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-            </select>
-            <label>Materialize Select</label>
-          </div>
-        </div>
+        {% include 'components/room-select.html'%}
         <!-- photos -->
         <div class="file-field input-field">
           <div class="btn">
             <span>File</span>
-            <input type="file" name="file" required>
+            <input type="file" name="file">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload one or more files">
