@@ -18,7 +18,7 @@
             <label for="quantity">Quantity</label>
           </div>
         </div>
-        {% include 'components/room-select.html'%}
+
         <!-- photos -->
         <div class="file-field input-field">
           <div class="btn">
@@ -79,7 +79,7 @@
         <div class="row">
           <div class="input-field col s12">
             <input name="model" type="text" class="validate">
-            <label for="model">Mode #</label>
+            <label for="model">Model #</label>
           </div>
         </div>
         <!-- serial -->
@@ -97,10 +97,10 @@
           </div>
         </div>
       </div>
-      <button class="waves-effect waves-light btn">Save For Later</button>
       <button class="btn waves-effect waves-light" type="submit" name="action">Submit
         <i class="material-icons right">send</i>
       </button>
     </form>
+    {% include 'components/room-add.html' %}
   </div>
 </div>

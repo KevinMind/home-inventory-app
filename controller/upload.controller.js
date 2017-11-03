@@ -90,6 +90,7 @@ exports.newItem = (req, res, next) => {
   payload = {
     'name': req.body.name,
     'uuid': uuidv4(),
+    'amazonified': false,
     'quantity': req.body.quantity,
     'room': data.room,
     'photos': `${imageName}`,

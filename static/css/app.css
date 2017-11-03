@@ -6,6 +6,10 @@ nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1)
 }
 
+.waves-effect {
+  overflow:visible;
+}
+
 .text-shadow {
   text-shadow: 2px 3px 5px rgba(2, 2, 2, 0.2);
 }
@@ -149,10 +153,9 @@ html body {
 .item-buttons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
-  margin-bottom: 10px;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .item-buttons a, button {

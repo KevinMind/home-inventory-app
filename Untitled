@@ -14,3 +14,47 @@ define bucket in bucketName variable
 
 image name is passed into createItemObject function as ${imageName}
 image is passed in as image
+
+
+
+Local storage CHECK FOR STORAGE
+
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
+
+USE LOCAL STORAGE IF AVAILABLE
+
+if (storageAvailable('localStorage')) {
+  // Yippee! We can use localStorage awesomeness
+}
+else {
+  // Too bad, no localStorage for us
+}
+
+WE WOULD WRAPTHIS IN A BUTTON THAT WOULD ALLOW USER TO TOGGLE TO OFFLINE MODE.
+
+
+ADD ROOMS
+
+ADD USERS

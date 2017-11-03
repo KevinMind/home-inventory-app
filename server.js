@@ -27,6 +27,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 8080;
 
+
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy({
+  passReqToCallback : true },
+  function(username, password, done) {
+    db.collection('User').findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+
+
+
 // Connect to DB and start app
 const MongoClient = require('mongodb').MongoClient
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
