@@ -1,3 +1,23 @@
+function getQueryVariable(variable) {
+   var query = window.location.search.substring(1);
+   var vars = query.split("&");
+   for (var i=0;i<vars.length;i++) {
+           var pair = vars[i].split("=");
+           if(pair[0] == variable){return pair[1];}
+   }
+   return(false);
+}
+
+
+window.onload= function () {
+  var id = getQueryVariable("id")
+  console.log(id)
+  if(id) {
+    var listItem = document.getElementById(id);
+    $('.collapsible').collapsible('open', $(".list-item").index(listItem));
+  }
+}
+
 $(document).ready(function() {
   Materialize.updateTextFields();
   console.log("done updating")
@@ -15,23 +35,20 @@ $(document).ready(function() {
   });
 
 
+
+
 $(".collapsible-header").click(function(event) {
   if($(this).parent().hasClass("active")) {
     console.log("is active..");
   } else {
     let id = $(this).data("scroll");
-    let name = $(this).find(".itemName").val();
-    console.log(name)
     let destination = document.getElementById(id);
-    let height = $("#item-list-header").height();
-
     setTimeout(function() {
       $('html, body').animate({
           scrollTop: ($(destination).position().top - 50)
       }, 300);
-    }, 600, [destination, height]);
+    }, 600, destination);
   }
-
 });
 
 $(".deleteModal").click(function(event) {
