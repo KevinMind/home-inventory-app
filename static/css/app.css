@@ -6,9 +6,13 @@ nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1)
 }
 
-.waves-effect {
-  overflow:visible;
+.box-link {
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
 }
+
+
 
 .text-shadow {
   text-shadow: 2px 3px 5px rgba(2, 2, 2, 0.2);
@@ -70,12 +74,44 @@ html body {
   width: 25%
 }
 
-@media (max-width: 650px) {
-  .cell.sidebar {
-    display: none;
-  }
+.sidebar-item {
+    margin-bottom: 0;
+    padding: .5rem;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
 
- }
+.sidebar-item:hover {
+    box-shadow: 0px 1px 3px rgba(110, 110, 110, 0.44);
+    cursor: pointer;
+    background: #ddd;
+}
+
+.sidebar-item:hover div div i {
+  transform: rotate(360deg);
+  transition: 600ms ease-out;
+}
+
+@media (max-width: 650px) {
+
+    .cell.sidebar {
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      display: flex;
+      flex-direction: row;
+      left: 0;
+      z-index: 99;
+    }
+    .cell.sidebar .sticky {
+      display: flex;
+      width: 100%;
+    }
+    .cell.main {
+      width: 100%;
+      display: block;
+    }
+}
 
 .sticky {
   position: sticky;
