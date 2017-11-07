@@ -1,34 +1,62 @@
-const Upload = require('./controller/upload.controller')
+'use strict';
+const Upload = require('../controller/upload.controller')
 const multipart = require('connect-multiparty')
 const multipartMiddleware = multipart()
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const amazon = require('./services/amazonApi')
+const amazon = require('../services/amazonApi')
+
 
 // PREPARE MODULE
 var express = require('express');
 module.exports = (function() {
-  'use strict';
   var router = express.Router();
   router.use(bodyParser.urlencoded({ extended: false }));
+
+  router.get('/login',
+    passport.authenticate('local'),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.redirect('/users/' + req.user.username);
+    });
+
 
   // HOME PAGE
   router.get('/', function(req, res) {
       var name = "Kevin";
       res.render('pages/index.html', {"name": name});
   });
+
   // VIEW ALL ITEMS
   router.get('/items', function(req, res) {
+    db.collection('items').find().toArray(function(err, results) {
+        if (err) {
+          console.log(err)
+        } else {
+          res.render('pages/items-view.html', {"items": results, "active": "035d993e-5045-4e43-8281-18de9b81ee60"})
+        }
+    });
+  });
+
+  // View DASHBOARD
+  router.get('/dashboard', function(req, res) {
     db.collection('items').find().toArray(function(err, results) {
       if(err) {
         res.write("error 500");
       } else {
-        res.render('pages/items-view.html', {"items": results, "active": "035d993e-5045-4e43-8281-18de9b81ee60"})
+        var costs = []
+        results.forEach(function(result) {
+          costs.unshift(result.cost)
+
+        });
+        var total = costs.reduce((sum, value) => sum + value, 1);
+        res.render('pages/dashboard.html', {"items": results, "total": total })
       }
     });
   });
 
-  // VIEW SINGLE ITEM
+  // EDIT SINGLE ITEM
   router.get('/items/:slug', function(req, res) {
     db.collection('items').findOne({uuid : req.params.slug}, function(err, document) {
       if(err) {
@@ -63,9 +91,18 @@ module.exports = (function() {
     res.redirect('/items')
   });
 
-  // VIEW NEW ITEM
+  // VIEW NEW ITEM FORM
   router.get('/new-item', function(req, res) {
-      res.render('pages/items-add.html');
+      db.collection('rooms').find().toArray(function(err, results) {
+        if(err) {
+          console.log(err)
+        } else {
+          console.log(results)
+
+          res.render('pages/items-add.html', {"rooms": results});
+        }
+      })
+
   });
 
   // DELETE ITEM
@@ -94,11 +131,14 @@ module.exports = (function() {
     failureFlash: true })
   );
 
-  // Amazonify
+  // AMAZONIFY
   router.post('/amazon', amazon.itemSearch);
-
-  // update item from amazon
+  // ADD NEW ROOM
+  router.post('/new-room', Upload.addRoom);
+  // AMAZON TO ITEM UPDATE
   router.get('/amazon/:slug', amazon.amazonToItem);
+
+  // DELETE ROOM
 
   return router;
 })();

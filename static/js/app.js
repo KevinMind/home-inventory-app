@@ -1,3 +1,5 @@
+
+// get url parameter
 function getQueryVariable(variable) {
    var query = window.location.search.substring(1);
    var vars = query.split("&");
@@ -8,7 +10,7 @@ function getQueryVariable(variable) {
    return(false);
 }
 
-
+// run on window.load
 window.onload= function () {
   var id = getQueryVariable("id")
   console.log(id)
@@ -18,6 +20,8 @@ window.onload= function () {
   }
 }
 
+
+// run on document.ready
 $(document).ready(function() {
   Materialize.updateTextFields();
   console.log("done updating")
@@ -33,9 +37,6 @@ $(document).ready(function() {
     startingTop: "5%",
     endingTop: "25%"
   });
-
-
-
 
 $(".collapsible-header").click(function(event) {
   if($(this).parent().hasClass("active")) {
@@ -67,6 +68,7 @@ $( "#roomSelect" ).change(function(event) {
 var stickySidebar = $('.sticky').offset().top;
 
 $(window).scroll(function() {
+  console.log(stickySidebar)
     if ($(window).scrollTop() > stickySidebar) {
         $('#item-list-header').addClass('fixed');
     }
@@ -75,9 +77,28 @@ $(window).scroll(function() {
     }
 });
 
-
-
-
-
-
 });
+
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Hours per Day'],
+    ['Living Room',     11],
+    ["Lindsey's Room",      2],
+    ['Garage',  2],
+    ['Master Bedroom', 2],
+    ["Kevin's Room",    7]
+  ]);
+
+  var options = {
+    title: 'Items by Room'
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+  chart.draw(data, options);
+}
