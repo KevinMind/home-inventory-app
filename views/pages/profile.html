@@ -15,6 +15,26 @@
 <div class="container">
   <div class="page-header text-center">
     <h1><span class="fa fa-anchor"></span> Profile Page <a href="/logout" class="btn btn-default btn-sm">Logout</a></h1>
+    <p>{{user._id}}</p>
+  </div>
+  <div class="row">
+    <h4>User Items</h4>
+    <p>Items: {{user.items}}</p>
+    <table>
+      <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in (user.items) %}
+        <tr>
+          <td>{{item.name}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <div class="row">
     <div class="col s12 m6">

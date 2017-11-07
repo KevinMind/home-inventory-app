@@ -13,7 +13,36 @@ const Upload = require('../controller/upload.controller')
 
 module.exports = function(app, passport) {
 
+	// route middleware to ensure user is logged in
+	function isLoggedIn(req, res, next) {
+		if (req.isAuthenticated())
+			return next();
+		console.log(req.user)
+		res.redirect('/login');
+	}
+
 // normal routes ===============================================================
+
+	app.get("/users", function(req, res) {
+		User.find({}, function(err, users) {
+			if(err) {
+				console.log(err)
+			} else {
+				res.send(users)
+			}
+		})
+	})
+
+	app.get("/delete/users", function(req, res) {
+		User.remove({}, function(err, result){
+			if(err) {
+				console.log(err)
+			} else {
+				console.log("DELETED EVERYONE")
+				res.redirect('/profile')
+			}
+		})
+	})
 
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
@@ -22,9 +51,14 @@ module.exports = function(app, passport) {
 
 	// PROFILE SECTION =========================
 	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('pages/profile.html', {
-			user : req.user
-		});
+		User.findOne(req.user, (err, user) => {
+			if(err) {
+				console.log(err)
+			} else {
+				console.log("found user: ", user)
+				res.render('pages/profile.html', { "user" : user});
+			}
+		})
 	});
 
 	// LOGOUT ==============================
@@ -254,13 +288,7 @@ module.exports = function(app, passport) {
   // DELETE ROOM
 
 
-	// route middleware to ensure user is logged in
-	function isLoggedIn(req, res, next) {
-		if (req.isAuthenticated())
-			return next();
-		console.log(req.user)
-		res.redirect('/login');
-	}
+
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

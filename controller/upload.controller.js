@@ -21,26 +21,26 @@ var s3 = new AWS.S3(awsConfig({
 
 // Creates Bucket
 const createMainBucket = (callback) => {
-  console.log("1. Beginning create bucket.");
+  // console.log("1. Beginning create bucket.");
 	// Create the parameters for calling createBucket
 	const bucketParams = {
 	   Bucket : bucketName
 	};
-  console.log("1. params: ", bucketParams);
+  // console.log("1. params: ", bucketParams);
 	s3.headBucket(bucketParams, function(err, data) {
 	   if (err) {
-	   	console.log("ErrorHeadBucket", err);
+      // onsole.log("ErrorHeadBucket", err);
 	      	s3.createBucket(bucketParams, function(err, data) {
 			   if (err) {
 			   	console.log("Error", err);
 			      callback(err, null)
 			   } else {
-            console.log("1a. no error.. here's some data: ", data);
+            // console.log("1a. no error.. here's some data: ", data);
 			      callback(null, data)
 			   }
 			});
 	   } else {
-        console.log("1b. no error her is the headbucket data: ", data);
+        // console.log("1b. no error her is the headbucket data: ", data);
 	      callback(null, data)
 	   }
 	})
@@ -53,14 +53,14 @@ const createItemObject = (callback) => {
         ACL: 'public-read',
         Body:image
     };
-  console.log("2. Begin create item object: ", params);
+  // console.log("2. Begin create item object: ", params);
 	s3.putObject(params, function (err, data) {
-    console.log("2a. begin putOBject")
+    // console.log("2a. begin putOBject")
 		if (err) {
 	    	console.log("Error uploading image: ", err);
 	    	callback(err, null)
 	    } else {
-	    	console.log("2b. Successfully uploaded image on S3", data);
+	    	// console.log("2b. Successfully uploaded image on S3", data);
         // Callback for successful s3 upload
 	    	callback(null, data)
 	    }
@@ -69,6 +69,7 @@ const createItemObject = (callback) => {
 
 exports.newItem = (req, res, next) => {
 
+  userId = req.user._id
   var tmp_path = req.files.file.path;
   image = fs.createReadStream(tmp_path);
   imageName = req.files.file.name;

@@ -1,30 +1,47 @@
-var Item = require('../app/models/item');
+const Item = require('../app/models/item');
+const User = require('../app/models/user')
 const async = require('async')
 
 
 // Create Item
 exports.createItem = (callback) => {
-  var newItem = new Item();
-  newItem.name = payload.name,
-  newItem.uuid=  newItem.genUuid(),
-  newItem.amazonified=  payload.amazonified,
-  newItem.quantity= payload.quantity,
-  newItem.photo= payload.photo,
-  newItem.length= payload.length,
-  newItem.width= payload.width,
-  newItem.height= payload.height,
-  newItem.age= payload.age,
-  newItem.store= payload.store,
-  newItem.brand= payload.brand,
-  newItem.model= payload.model,
-  newItem.serial= payload.serial,
-  newItem.cost= payload.cost
+  console.log(userId)
+  let user = User.findById(userId, function(err, user) {
+    if(err) {
+      console.log(err)
+    } else {
 
-  newItem.save(function(err) {
-      if (err)
-          throw err;
-      return callback(null, newItem);
-  });
+      var newItem = new Item();
+      newItem.name = payload.name;
+      newItem.uuid=  newItem.genUuid();
+      newItem.amazonified=  payload.amazonified;
+      newItem.quantity= payload.quantity;
+      newItem.photo= payload.photo;
+      newItem.length= payload.length;
+      newItem.width= payload.width;
+      newItem.height= payload.height;
+      newItem.age= payload.age;
+      newItem.store= payload.store;
+      newItem.brand= payload.brand;
+      newItem.model= payload.model;
+      newItem.serial= payload.serial;
+      newItem.cost= payload.cost;
+      // user.items= []
+      user.items.push(newItem);
+      user.save((err) => {
+        if(err) throw err
+      })
+
+      // user.items.upadate()
+
+      newItem.save(function(err) {
+          if (err)
+              throw err;
+          return callback(null, newItem);
+      });
+    }
+  })
+
 }
 
 // Update Item
@@ -69,18 +86,25 @@ exports.updateItem = (req, res, next) => {
 // Delete Item
 
 exports.deleteItem = (req, res, next) => {
-  var itemUuid = req.params.slug
-  console.log(itemUuid)
-  Item.findOne({uuid : itemUuid}, function(err, document) {
+  var id = req.params.slug
+  console.log(id)
+  Item.findOne({_id : id}, function(err, document) {
     if(err) {
       console.log(err)
     } else {
-      console.log(document.uuid)
-      Item.remove({ uuid: document.uuid}, function(err, result) {
+      console.log(document._id)
+      Item.remove({ _id: document._id}, function(err, result) {
         if(err) {
           console.log(err)
         } else {
-          res.render('pages/deleted.html', {"item": result})
+          User.findById(req.user, function(err, user) {
+            if(err) {
+              console.log(err)
+            } else {
+              console.log(user.items)
+              res.render('pages/deleted.html', {"item": result})
+            }
+          })
         }
       })
     }
