@@ -12,6 +12,13 @@ nav {
     color: inherit;
 }
 
+.login-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+}
+
 
 
 .text-shadow {

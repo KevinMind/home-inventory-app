@@ -30,8 +30,8 @@
     </div>
     <ul class="collapsible m0" data-collapsible="accordion">
      {% for item in items %}
-     <li class="list-item" id="{{item.uuid}}">
-       <div class="collapsible-header row item-list-header" data-id="{{item.uuid}}" data-scroll="{{item.uuid}}">
+     <li class="list-item" id="{{item._id}}">
+       <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
          <div class="col s3 itemName">{{item.name}}</div>
          <div class="col s3 itemRoom">{{item.room}}</div>
          <div class="col s3 itemQuant">{{item.quantity}}</div>
@@ -71,7 +71,7 @@
                     </tr>
                     <tr>
                       <td>Price: </td>
-                      <td>{{item.cost}}</td>
+                      <td>${{item.cost}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -81,8 +81,8 @@
                 <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
                </div>
                <div class="item-buttons">
-                 <a href="/items/{{item.uuid}}" class="waves-effect waves-light btn">edit</a>
-                 <button data-id="{{item.uuid}}" class="waves-effect waves-light btn deleteModal">delete</button>
+                 <a href="/items/{{item._id}}" class="waves-effect waves-light btn">edit</a>
+                 <button data-id="{{item._id}}" class="waves-effect waves-light btn deleteModal">delete</button>
               </div>
               <div class="item-buttons">
                 {% if item.amazonified %}
@@ -96,11 +96,11 @@
                   <li>Model: {{item.a_model}}</li>
                   <li>Price: {{item.a_upc}}</li>
                   <li>Cost: {{item.a_cost}}</li>
-                  <li><a href="/amazon/{{item.uuid}}" role="button" class="waves-effect waves-light yellow btn amber lighten-1"name="">Update Item</a></li>
+                  <li><a href="/amazon/{{item._id}}" role="button" class="waves-effect waves-light yellow btn amber lighten-1"name="">Update Item</a></li>
                 </ul>
                 {% else %}
                 <form class="" action="/amazon" method="post">
-                  <input type="hidden" name="id" value="{{item.uuid}}">
+                  <input type="hidden" name="id" value="{{item._id}}">
                   <input type="hidden" name="keywords" value="{{item.name}} {{item.model}} {{item.serial}}">
                   <input type="hidden" name="brand" value="{{item.brand}}">
                   <input type="hidden" name="condition" value="new">
@@ -134,7 +134,7 @@
           </div>
         </div>
       </a>
-      <a href="/new-item" class="box-link waves-effect waves-light">
+      <a href="/dashboard" class="box-link waves-effect waves-light">
         <div class="row valign-wrapper sidebar-item">
           <div class="col s12 m8 hide-on-small-only">
             Dashboard

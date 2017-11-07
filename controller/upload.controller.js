@@ -9,6 +9,7 @@ const bucketName = "uploads.hiapp.io"
 const path = require('path')
 const fs = require('fs')
 const uuidv4 = require('uuid/v4');
+const itemUploader = require('./item.controller')
 
 let pathParams, image, imageName;
 
@@ -81,6 +82,7 @@ const createMongoDbRecord = (callback) => {
   });
 }
 
+
 exports.newItem = (req, res, next) => {
 
   var tmp_path = req.files.file.path;
@@ -108,7 +110,7 @@ exports.newItem = (req, res, next) => {
   async.series([
     createMainBucket,
     createItemObject,
-    createMongoDbRecord,
+    itemUploader.createItem,
     ], (err, result) => {
       if(err) return res.send(err)
       else res.redirect("/items")
@@ -142,6 +144,22 @@ exports.updateItem = (req, res) => {
     }
   )
 };
+
+exports.addRoom = (req, res) => {
+  payload = {
+    "name": req.body.name,
+    "uuid": uuidv4()
+  }
+  db.collection('rooms').save(payload, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("added room")
+      }
+  });
+  res.redirect("/new-item")
+
+}
 
 
 exports.displayForm = (req, res) => {

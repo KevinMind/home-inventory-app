@@ -1,0 +1,302 @@
+const Upload = require('../controller/upload.controller')
+const multipart = require('connect-multiparty')
+const multipartMiddleware = multipart()
+const bodyParser = require('body-parser')
+const passport = require('passport')
+const amazon = require('../services/amazonApi')
+const Item = require('./models/item')
+const User = require('./models/user')
+
+
+module.exports = function(app, passport) {
+
+// normal routes ===============================================================
+
+	// show the home page (will also have our login links)
+	app.get('/', function(req, res) {
+		res.render('pages/index.html');
+	});
+
+	// PROFILE SECTION =========================
+	app.get('/profile', isLoggedIn, function(req, res) {
+		res.render('pages/profile.html', {
+			user : req.user
+		});
+	});
+
+	// LOGOUT ==============================
+	app.get('/logout', function(req, res) {
+		req.logout();
+		res.redirect('/');
+	});
+
+// =============================================================================
+// AUTHENTICATE (FIRST LOGIN) ==================================================
+// =============================================================================
+
+	// locally --------------------------------
+		// LOGIN ===============================
+		// show the login form
+		app.get('/login', function(req, res) {
+			res.render('pages/login.html', { message: req.flash('loginMessage') });
+		});
+
+		// process the login form
+		app.post('/login', passport.authenticate('local-login', {
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/login', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		}));
+
+		// SIGNUP =================================
+		// show the signup form
+		app.get('/signup', function(req, res) {
+			res.render('pages/signup.html', { message: req.flash('loginMessage') });
+		});
+
+		// process the signup form
+		app.post('/signup', passport.authenticate('local-signup', {
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/signup', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		}));
+
+	// facebook -------------------------------
+
+		// send to facebook to do the authentication
+		app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+		// handle the callback after facebook has authenticated the user
+		app.get('/auth/facebook/callback',
+			passport.authenticate('facebook', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+	// twitter --------------------------------
+
+		// send to twitter to do the authentication
+		app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
+
+		// handle the callback after twitter has authenticated the user
+		app.get('/auth/twitter/callback',
+			passport.authenticate('twitter', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+
+	// google ---------------------------------
+
+		// send to google to do the authentication
+		app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+		// the callback after google has authenticated the user
+		app.get('/auth/google/callback',
+			passport.authenticate('google', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+// =============================================================================
+// AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
+// =============================================================================
+
+	// locally --------------------------------
+		app.get('/connect/local', function(req, res) {
+			res.render('pages/connect-local.html', { message: req.flash('loginMessage') });
+		});
+		app.post('/connect/local', passport.authenticate('local-signup', {
+			successRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		}));
+
+	// facebook -------------------------------
+
+		// send to facebook to do the authentication
+		app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+
+		// handle the callback after facebook has authorized the user
+		app.get('/connect/facebook/callback',
+			passport.authorize('facebook', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+	// twitter --------------------------------
+
+		// send to twitter to do the authentication
+		app.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
+
+		// handle the callback after twitter has authorized the user
+		app.get('/connect/twitter/callback',
+			passport.authorize('twitter', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+
+	// google ---------------------------------
+
+		// send to google to do the authentication
+		app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
+
+		// the callback after google has authorized the user
+		app.get('/connect/google/callback',
+			passport.authorize('google', {
+				successRedirect : '/profile',
+				failureRedirect : '/'
+			}));
+
+// =============================================================================
+// UNLINK ACCOUNTS =============================================================
+// =============================================================================
+// used to unlink accounts. for social accounts, just remove the token
+// for local account, remove email and password
+// user account will stay active in case they want to reconnect in the future
+
+	// local -----------------------------------
+	app.get('/unlink/local', function(req, res) {
+		var user            = req.user;
+		user.local.email    = undefined;
+		user.local.password = undefined;
+		user.save(function(err) {
+			res.redirect('/profile');
+		});
+	});
+
+	// facebook -------------------------------
+	app.get('/unlink/facebook', function(req, res) {
+		var user            = req.user;
+		user.facebook.token = undefined;
+		user.save(function(err) {
+			res.redirect('/profile');
+		});
+	});
+
+	// twitter --------------------------------
+	app.get('/unlink/twitter', function(req, res) {
+		var user           = req.user;
+		user.twitter.token = undefined;
+		user.save(function(err) {
+			res.redirect('/profile');
+		});
+	});
+
+	// google ---------------------------------
+	app.get('/unlink/google', function(req, res) {
+		var user          = req.user;
+		user.google.token = undefined;
+		user.save(function(err) {
+			res.redirect('/profile');
+		});
+	});
+
+// =============================================================================
+// APP ROUTES ==================================================================
+// =============================================================================
+
+  // VIEW ALL ITEMS
+  app.get('/items', isLoggedIn, function(req, res) {
+		Item.find({}, function(err, results) {
+			if(err) {
+				console.log(err)
+			} else {
+				res.render('pages/items-view.html', {"items": results})
+			}
+		});
+  });
+
+  // View DASHBOARD
+  app.get('/dashboard', isLoggedIn, function(req, res) {
+		if(req.user) {
+			user = req.user
+		}
+    res.render('pages/dashboard.html', {"user": user})
+  });
+
+  // EDIT SINGLE ITEM
+  app.get('/items/:slug', function(req, res) {
+    Item.findOne({_id : req.params.slug}, function(err, document) {
+      if(err) {
+        console.log(err)
+      } else {
+        res.render("pages/item-edit.html", {"item": document});
+      }
+    });
+  });
+
+  // UPDATE SINGLE ITEM
+  app.post('/items/:slug', function(req, res) {
+    var data = req.body;
+    console.log(data)
+    console.log("data: ", data);
+    Item.update({_id: req.params.slug}, {
+      $set: {
+        'name': req.body.name,
+        'quantity': req.body.quantity,
+        'room': data.room,
+        'length': data.length,
+        'width': data.width,
+        'height': data.height,
+        'age': data.age,
+        'store': data.store,
+        'brand': data.brand,
+        'model': data.model,
+        'serial': data.serial,
+        'cost': data.cost
+        }
+      })
+    res.redirect('/items')
+  });
+
+  // VIEW NEW ITEM FORM
+  app.get('/new-item', isLoggedIn, function(req, res) {
+		res.render('pages/items-add.html', {})
+  });
+
+  // DELETE ITEM
+  app.get('/delete/:slug', function (req, res) {
+    console.log("Delete request received.")
+    Item.findOne({_id : req.params.slug}, function(err, document) {
+      if(err) {
+        console.log(err)
+      } else {
+        res.render('pages/deleted.html', {"item": document})
+        Item.remove({_id:req.params.slug})
+      }
+    });
+  });
+
+  // CREATE ITEM
+  app.post('/new-item', multipartMiddleware, Upload.newItem)
+
+  // AMAZONIFY
+  app.post('/amazon', amazon.itemSearch);
+  // ADD NEW ROOM
+  app.post('/new-room', Upload.addRoom);
+  // AMAZON TO ITEM UPDATE
+  app.get('/amazon/:slug', amazon.amazonToItem);
+
+  // DELETE ROOM
+
+
+	// route middleware to ensure user is logged in
+	function isLoggedIn(req, res, next) {
+		if (req.isAuthenticated())
+			return next();
+		console.log(req.user)
+		res.redirect('/login');
+	}
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// =========================================================================
+	// END ROUTES ================================================================
+	// =========================================================================
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+};

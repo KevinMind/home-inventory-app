@@ -33,15 +33,14 @@ exports.itemSearch = (req, res, next) => {
         "a_manufacturer": attributes.Manufacturer[0],
         "a_model": attributes.Model[0],
         "a_upc": attributes.UPC[0],
-        "a_cost": results.OfferSummary[0].LowestNewPrice[0].FormattedPrice[0]
+        "a_cost": (results.OfferSummary[0].LowestNewPrice[0].Amount[0]/100)
       }
     })
-    res.redirect('/items?id=' + req.body.id);
   }).catch(function(err) {
       console.log(JSON.stringify(err))
       res.redirect("/items?id=" + req.body.id)
     });
-
+  res.redirect('/items?id=' + req.body.id);
 };
 
 // update amazon info to item and clear amazon info

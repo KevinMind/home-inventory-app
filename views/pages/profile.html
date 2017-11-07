@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+<!-- ###################################################################### -->
+<!--                                 HEAD                                   -->
+
+{% block head %} {{ super() }} {% endblock%}
+
+<!-- ###################################################################### -->
+<!--                                 HEADER                                 -->
+{% block header%} {{ super() }} {% endblock %}
+
+<!-- ###################################################################### -->
+<!--                                 BODY                                   -->
+
+{% block body %}
+<div class="container">
+  <div class="page-header text-center">
+    <h1><span class="fa fa-anchor"></span> Profile Page <a href="/logout" class="btn btn-default btn-sm">Logout</a></h1>
+  </div>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Local</span> {% if (user.local.email) %}
+          <ul>
+            <li><strong>email</strong>: {{user.local.email}}</li>
+          </ul>
+        </div>
+        <div class="card-action">
+          <a href="/unlink/local">Unlink</a> {% else %}
+          <a href="/connect/local">Connect Local</a> {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- FACEBOOK INFORMATION -->
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Facebook</span>
+          <!-- check if the user has this token (is the user authenticated with this social account) -->
+          {% if (user.facebook.token) %}
+          <ul>
+            <li><strong>email</strong>{{user.facebook.email}}</li>
+            <li><strong>name</strong>{{user.facebook.name}}</li>
+          </ul>
+        </div>
+        <div class="card-action">
+          <a href="/unlink/facebook">Unlink</a> {% else %}
+          <a href="/connect/facebook">Connect Facebook</a> {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- TWITTER INFORMATION -->
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Twitter</span> {% if (user.twitter.token) %}
+          <ul>
+            <li><strong>username</strong>{{user.twitter.username}}</li>
+            <li><strong>display name</strong>{{user.twitter.displayName}}</li>
+          </ul>
+        </div>
+        <div class="card-action">
+          <a href="/unlink/twitter">Unlink</a> {% else %}
+          <a href="/connect/twitter">Connect Twitter</a> {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- GOOGLE INFORMATION -->
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Google</span> {% if (user.google.token) %}
+          <ul>
+            <li><strong>{{user.google.email}}</strong></li>
+            <li><strong>{{user.google.name}}</strong></li>
+          </ul>
+        </div>
+        <div class="card-action">
+          <a href="/unlink/google">Unlink</a> {% else %}
+          <a href="/connect/google">Connect Google</a> {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
