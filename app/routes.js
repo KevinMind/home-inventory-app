@@ -1,12 +1,15 @@
-const Upload = require('../controller/upload.controller')
+// MiddleWare
 const multipart = require('connect-multiparty')
 const multipartMiddleware = multipart()
-const bodyParser = require('body-parser')
-const passport = require('passport')
-const amazon = require('../services/amazonApi')
+
+// Models
 const Item = require('./models/item')
 const User = require('./models/user')
 
+// Controllers
+const amazon = require('../services/amazonApi')
+const itemUploader = require('../controller/item.controller')
+const Upload = require('../controller/upload.controller')
 
 module.exports = function(app, passport) {
 
@@ -218,7 +221,7 @@ module.exports = function(app, passport) {
 
   // EDIT SINGLE ITEM
   app.get('/items/:slug', function(req, res) {
-    Item.findOne({_id : req.params.slug}, function(err, document) {
+    Item.findOne({uuid : req.params.slug}, function(err, document) {
       if(err) {
         console.log(err)
       } else {
@@ -228,28 +231,7 @@ module.exports = function(app, passport) {
   });
 
   // UPDATE SINGLE ITEM
-  app.post('/items/:slug', function(req, res) {
-    var data = req.body;
-    console.log(data)
-    console.log("data: ", data);
-    Item.update({_id: req.params.slug}, {
-      $set: {
-        'name': req.body.name,
-        'quantity': req.body.quantity,
-        'room': data.room,
-        'length': data.length,
-        'width': data.width,
-        'height': data.height,
-        'age': data.age,
-        'store': data.store,
-        'brand': data.brand,
-        'model': data.model,
-        'serial': data.serial,
-        'cost': data.cost
-        }
-      })
-    res.redirect('/items')
-  });
+  app.post('/items/:slug', multipartMiddleware, itemUploader.updateItem);
 
   // VIEW NEW ITEM FORM
   app.get('/new-item', isLoggedIn, function(req, res) {
@@ -257,17 +239,7 @@ module.exports = function(app, passport) {
   });
 
   // DELETE ITEM
-  app.get('/delete/:slug', function (req, res) {
-    console.log("Delete request received.")
-    Item.findOne({_id : req.params.slug}, function(err, document) {
-      if(err) {
-        console.log(err)
-      } else {
-        res.render('pages/deleted.html', {"item": document})
-        Item.remove({_id:req.params.slug})
-      }
-    });
-  });
+  app.get('/delete/:slug', multipartMiddleware, itemUploader.deleteItem);
 
   // CREATE ITEM
   app.post('/new-item', multipartMiddleware, Upload.newItem)

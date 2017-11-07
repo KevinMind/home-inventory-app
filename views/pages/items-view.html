@@ -33,10 +33,10 @@
      <li class="list-item" id="{{item._id}}">
        <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
          <div class="col s3 itemName">{{item.name}}</div>
-         <div class="col s3 itemRoom">{{item.room}}</div>
+         <div class="col s3 itemRoom">{{item.amazonified}}</div>
          <div class="col s3 itemQuant">{{item.quantity}}</div>
          <div class="col s3 item-image-container">
-           <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+           <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
          </div>
        </div>
        <div class="collapsible-body item-body">
@@ -44,6 +44,10 @@
              <div class="col s12 m6">
                 <table class="bordered">
                   <tbody>
+                    <tr>
+                      <td>_Id: </td>
+                      <td>{{item._id}}</td>
+                    </tr>
                     <tr>
                       <td>Dimensions: </td>
                       <td>{{item.length}}" x {{item.width}}" x {{item.height}}""</td>
@@ -78,7 +82,7 @@
              </div>
              <div class="col s12 m6 item-full-image">
                <div class="image-container z-depth-1">
-                <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+                <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
                </div>
                <div class="item-buttons">
                  <a href="/items/{{item._id}}" class="waves-effect waves-light btn">edit</a>
@@ -87,20 +91,19 @@
               <div class="item-buttons">
                 {% if item.amazonified %}
                 <ul>
-                  <li><a href="{{item.a_url}}">View On Amazon</a></li>
-                  <li>ASIN:{{item.a_asin}}</li>
-                  <li>Processed: {{item.amazonified}}</li>
-                  <li>Brande: {{item.a_brand}}</li>
-                  <li>Dimensions: {{item.a_length}}" x {{item.a_width}}" x {{item.a_height}}"</li>
-                  <li>Manufacturer: {{item.a_manufacturer}}</li>
-                  <li>Model: {{item.a_model}}</li>
-                  <li>Price: {{item.a_upc}}</li>
-                  <li>Cost: {{item.a_cost}}</li>
+                  <li><a href="{{item.amazonData.url}}">View On Amazon</a></li>
+                  <li>ASIN:{{item.amazonData.asin}}</li>
+                  <li>Brand: {{item.amazonData.brand}}</li>
+                  <li>Dimensions: {{item.amazonData.length}}" x {{item.amazonData.width}}" x {{item.amazonData.height}}"</li>
+                  <li>Manufacturer: {{item.amazonData.manufacturer}}</li>
+                  <li>Model: {{item.amazonData.model}}</li>
+                  <li>Price: {{item.amazonData.upc}}</li>
+                  <li>Cost: {{item.amazonData.cost}}</li>
                   <li><a href="/amazon/{{item._id}}" role="button" class="waves-effect waves-light yellow btn amber lighten-1"name="">Update Item</a></li>
                 </ul>
                 {% else %}
                 <form class="" action="/amazon" method="post">
-                  <input type="hidden" name="id" value="{{item._id}}">
+                  <input type="hidden" name="_id" value="{{item._id}}">
                   <input type="hidden" name="keywords" value="{{item.name}} {{item.model}} {{item.serial}}">
                   <input type="hidden" name="brand" value="{{item.brand}}">
                   <input type="hidden" name="condition" value="new">
@@ -146,7 +149,7 @@
           </div>
         </div>
       </a>
-      <a href="/new-item" class="box-link waves-effect waves-light">
+      <a href="/profile" class="box-link waves-effect waves-light">
         <div class="row valign-wrapper sidebar-item">
           <div class="col s12 m8 hide-on-small-only	">
             Profile
@@ -154,7 +157,7 @@
           <div class="col s12 m4">
             <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
               <i class="material-icons center-align">account_circle</i>
-            </div>
+          </div>
           </div>
         </div>
       </a>

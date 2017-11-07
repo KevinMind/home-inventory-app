@@ -24,10 +24,11 @@
   </div>
   <div class="row">
     <div class="col s12 m4 show-on-medium-and-up item-full-image image-container">
-      <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photos}}" alt="">
+      <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
     </div>
     <div class="col s12 m8">
       <form class="" action="/items/{{item.uuid}}" method="post">
+        <input type="hidden" name="uuid" value="{{item.uuid}}">
          <div class="row">
            <!-- Name -->
            <div class="row">
@@ -51,10 +52,11 @@
            <div class="row">
              <div class="input-field col s12">
                <select name="room" id="roomSelect">
-                 <option value="1">Option 1</option>
-                 <option value="2">Option 2</option>
-                 <option value="3">Option 3</option>
-                 <option value="4">Option 4</option>
+                 <option value="" disabled selected><a href="modal1">Select a Room</a></option>
+                 {% for room in rooms %}
+                 <option value="{{room.uuid}}">{{room.name}}</option>
+                 {% endfor %}
+                 <option value="0">Add a room +</option>
                </select>
                <label>Materialize Select</label>
              </div>
@@ -131,6 +133,7 @@
              </button>
          </div>
       </form>
+      {% include 'components/room-add.html' %}
     </div>
   </div>
 </div>

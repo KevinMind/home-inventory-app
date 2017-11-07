@@ -67,35 +67,20 @@ const createItemObject = (callback) => {
 	})
 }
 
-const createMongoDbRecord = (callback) => {
-  console.log("3. beginning createMongoDbRecord: ")
-  console.log("THIS ONE: ", `${data}`);
-
-  console.log(payload)
-  db.collection('items').save(payload, (err, result) => {
-      if (err) {
-        console.log(err);
-        callback(err, null)
-      } else {
-        callback(null, data)
-      }
-  });
-}
-
-
 exports.newItem = (req, res, next) => {
 
   var tmp_path = req.files.file.path;
   image = fs.createReadStream(tmp_path);
   imageName = req.files.file.name;
   data= req.body;
+
   payload = {
     'name': req.body.name,
     'uuid': uuidv4(),
     'amazonified': false,
     'quantity': req.body.quantity,
     'room': data.room,
-    'photos': `${imageName}`,
+    'photo': `${imageName}`,
     'length': data.length,
     'width': data.width,
     'height': data.height,
@@ -118,32 +103,6 @@ exports.newItem = (req, res, next) => {
   )
 };
 
-exports.updateItem = (req, res) => {
-
-  data= req.body;
-  payload = {
-    'name': data.name,
-    'uuid': data.uuid,
-    'quantity': req.body.quantity,
-    'room': data.room,
-    'photos': `${imageName}`,
-    'length': data.length,
-    'width': data.width,
-    'height': data.height,
-    'store': data.store,
-    'brand': data.brand,
-    'model': data.model,
-    'serial': data.serial,
-    'cost': data.cost
-  }
-  async.series([
-    createMongoDbRecord,
-    ], (err, result) => {
-      if(err) return res.send(err)
-      else res.redirect("/items")
-    }
-  )
-};
 
 exports.addRoom = (req, res) => {
   payload = {
