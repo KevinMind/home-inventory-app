@@ -20,18 +20,7 @@ var itemSchema = mongoose.Schema({
   model: String,
   serial: String,
   cost: Number,
-  amazonData: {
-    asin: String,
-    url: String,
-    brand: String,
-    height: Number,
-    width: Number,
-    length: Number,
-    manufacturer: String,
-    model: String,
-    upc: String,
-    cost: Number
-  }
+  amazonData: Array
 });
 
 // methods ======================

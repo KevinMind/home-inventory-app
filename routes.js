@@ -132,7 +132,7 @@ module.exports = (function() {
   );
 
   // AMAZONIFY
-  router.post('/amazon', amazon.itemSearch);
+  // router.post('/amazon', amazon.itemSearch);
   // ADD NEW ROOM
   router.post('/new-room', Upload.addRoom);
   // AMAZON TO ITEM UPDATE

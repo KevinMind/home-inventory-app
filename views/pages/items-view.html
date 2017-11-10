@@ -104,8 +104,8 @@
                 {% else %}
                 <form class="" action="/amazon" method="post">
                   <input type="hidden" name="_id" value="{{item._id}}">
-                  <input type="hidden" name="keywords" value="{{item.name}} {{item.model}} {{item.serial}}">
-                  <input type="hidden" name="brand" value="{{item.brand}}">
+                  <input type="text" name="keywords" value="{{item.name}} {{item.brand}} {{item.model}} {{item.serial}}">
+                  <!-- <input type="hidden" name="brand" value="{{item.brand}}"> -->
                   <input type="hidden" name="condition" value="new">
                   <button class="waves-effect waves-light yellow btn amber lighten-1"name="">Amazonify</button>
                 </form>
