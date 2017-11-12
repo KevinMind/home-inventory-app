@@ -25,8 +25,8 @@
       <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
     </div>
     <div class="col s12 m8">
-      <form class="" action="/items/{{item.uuid}}" method="post">
-        <input type="hidden" name="uuid" value="{{item.uuid}}">
+      <form class="" action="/items/{{item._id}}" method="post">
+        <input type="hidden" name="_id" value="{{item._id}}">
          <div class="row">
            <!-- Name -->
            <div class="row">

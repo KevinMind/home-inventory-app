@@ -23,7 +23,7 @@ module.exports = function(app, passport) {
 
 // normal routes ===============================================================
 
-	app.get("/users", function(req, res) {
+	app.get("/admin/users", function(req, res) {
 		User.find({}, function(err, users) {
 			if(err) {
 				console.log(err)
@@ -33,14 +33,28 @@ module.exports = function(app, passport) {
 		})
 	})
 
-	app.get("/delete/users", function(req, res) {
+	app.get("/admin/users/delete", function(req, res) {
 		User.remove({}, function(err, result){
 			if(err) {
 				console.log(err)
 			} else {
 				console.log("DELETED EVERYONE")
-				res.redirect('/profile')
+				res.redirect('/admin/users')
 			}
+		})
+	})
+
+	app.get('/admin/items', (req, res) => {
+		Item.find({}, (err, items) => {
+			if(err) console.log(err)
+			else res.send(items)
+		})
+	})
+
+	app.get('/admin/items/delete', (req, res) => {
+		Item.remove({}, (err, result) => {
+			if(err) console.log(err)
+			else res.redirect('/admin/items')
 		})
 	})
 
@@ -237,12 +251,12 @@ module.exports = function(app, passport) {
 
   // VIEW ALL ITEMS
   app.get('/items', isLoggedIn, function(req, res) {
-		Item.find({}, function(err, results) {
-			if(err) {
-				console.log(err)
-			} else {
-				res.render('pages/items-view.html', {"items": results})
-			}
+		console.log(req.user._id)
+		Item.find({
+			user: req.user._id
+		}, (err, results) => {
+			if(err) console.log(err)
+			else res.render('pages/items-view.html', {"items": results})
 		});
   });
 

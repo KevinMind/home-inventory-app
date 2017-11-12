@@ -7,7 +7,7 @@ const uuid = require('uuid/v4')
 // define the schema for our user model
 var itemSchema = mongoose.Schema({
   name: String,
-  uuid: String,
+  user: String,
   amazonified: Boolean,
   quantity: Number,
   photo: String,
