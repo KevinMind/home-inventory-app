@@ -2,17 +2,11 @@
 <!-- ###################################################################### -->
 <!--                                 HEAD                                   -->
 
-{% block head %}
-{{ super() }}
-
-{% endblock%}
+{% block head %} {{ super() }} {% endblock%}
 
 <!-- ###################################################################### -->
 <!--                                 HEADER                                 -->
-{% block header%}
-{{ super() }}
-
-{% endblock %}
+{% block header%} {{ super() }} {% endblock %}
 
 <!-- ###################################################################### -->
 <!--                                 BODY                                   -->
@@ -20,28 +14,28 @@
 {% block body %}
 <div class="container-fluid">
   <div class="table height-window">
-  <div class="cell main">
-    <!-- FLOATING HEADER -->
-    <div class="row sticky grey lighten-3 collapsible-header item-list-header" id="item-list-header">
-      <div class="col s3">Name <span id="itemNameHead"></span></div>
-      <div class="col s3">Room <span id="itemRoomHead"></span></div>
-      <div class="col s3">Quantity <span id="itemQuantityHead"></span></div>
-      <div class="col s3">Image</div>
-    </div>
-    <ul class="collapsible m0" data-collapsible="accordion">
-     {% for item in items %}
-     <li class="list-item" id="{{item._id}}">
-       <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
-         <div class="col s3 itemName">{{item.name}}</div>
-         <div class="col s3 itemRoom">{{item.amazonified}}</div>
-         <div class="col s3 itemQuant">{{item.quantity}}</div>
-         <div class="col s3 item-image-container">
-           <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
-         </div>
-       </div>
-       <div class="collapsible-body item-body">
-           <div class="row">
-             <div class="col s12 m6">
+    <div class="cell main">
+      <!-- FLOATING HEADER -->
+      <div class="row sticky grey lighten-3 collapsible-header item-list-header" id="item-list-header">
+        <div class="col s3">Name <span id="itemNameHead"></span></div>
+        <div class="col s3">Room <span id="itemRoomHead"></span></div>
+        <div class="col s3">Quantity <span id="itemQuantityHead"></span></div>
+        <div class="col s3">Image</div>
+      </div>
+      <ul class="collapsible m0" data-collapsible="accordion">
+        {% for item in items %}
+        <li class="list-item" id="{{item._id}}">
+          <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
+            <div class="col s3 itemName">{{item.name}}</div>
+            <div class="col s3 itemRoom">{{item.amazonified}}</div>
+            <div class="col s3 itemQuant">{{item.quantity}}</div>
+            <div class="col s3 item-image-container">
+              <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
+            </div>
+          </div>
+          <div class="collapsible-body item-body">
+            <div class="row">
+              <div class="col s12 m6">
                 <table class="bordered">
                   <tbody>
                     <tr>
@@ -79,24 +73,26 @@
                     </tr>
                   </tbody>
                 </table>
-             </div>
-             <div class="col s12 m6 item-full-image">
-               <div class="image-container z-depth-1">
-                <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
-               </div>
-               <div class="item-buttons">
-                 <a href="/items/{{item._id}}" class="waves-effect waves-light btn">edit</a>
-                 <button data-id="{{item._id}}" class="waves-effect waves-light btn deleteModal">delete</button>
               </div>
-              <div class="item-buttons">
+              <div class="col s12 m6 item-full-image">
+                <div class="image-container z-depth-1">
+                  <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
+                </div>
+                <div class="item-buttons">
+                  <a href="/items/{{item._id}}" class="waves-effect waves-light btn">edit</a>
+                  <button data-id="{{item._id}}" class="waves-effect waves-light btn deleteModal">delete</button>
+                </div>
                 {% if item.amazonified %}
-                <div class="carousel center image-container z-depth-1" data-indicators="true">
+                <div class="item-buttons">
+                  <a href="/amazon/delete?id={{item._id}}">Clear Search Results</a>
+                </div>
+                <div class="item-buttons">
+                  <div class="carousel center image-container z-depth-1" data-indicators="true">
                     {% for item in item.amazonData %}
                     <div class="carousel-item" style="
                     background: white;
                     height:350px;
-                    border: 2px solid #ffbc74"
-                    href="#one!">
+                    border: 2px solid #ffbc74" href="#one!">
                       <p>{{item.title}}</p>
                       <p>Price: ${{item.cost}}</p>
                       <p>{{item.itemId}}</p>
@@ -105,81 +101,78 @@
                       background-image:url('{{item.image}}');
                       background-position: center;
                       background-repeat: no-repeat;
-                      background: #0000001c;"
-                      height="auto"
-                      width="auto"
-                      >
+                      background: #0000001c;" height="auto" width="auto">
                     </div>
                     {% endfor %}
+                  </div>
                 </div>
                 {% else %}
-                <form class="" action="/amazon" method="post">
-                  <input type="hidden" name="_id" value="{{item._id}}">
-                  <input type="text" name="keywords" value="{{item.name}} {{item.brand}} {{item.model}} {{item.serial}}">
-                  <!-- <input type="hidden" name="brand" value="{{item.brand}}"> -->
-                  <input type="hidden" name="condition" value="new">
-                  <button class="waves-effect waves-light yellow btn amber lighten-1"name="">Amazonify</button>
-                </form>
+                <div class="item-buttons">
+                  <form class="" action="/amazon" method="post">
+                    <input type="hidden" name="_id" value="{{item._id}}">
+                    <input type="text" name="keywords" value="{{item.name}} {{item.brand}} {{item.model}} {{item.serial}}">
+                    <!-- <input type="hidden" name="brand" value="{{item.brand}}"> -->
+                    <input type="hidden" name="condition" value="new">
+                    <button class="waves-effect waves-light yellow btn amber lighten-1" name="">Amazonify</button>
+                  </form>
+                </div>
                 {% endif %}
               </div>
-             </div>
-           </div>
-        </div>
-     </li>
-     {% else %}
-     <div class="">
-       <h3>No Items Yet.</h3>
-       <a href="/new-item">Add an Item</a>
-     </div>
-     {% endfor %}
-   </ul>
-  </div>
-  <div class="cell sidebar grey lighten-3 z-depth-1">
-    <div class="sticky">
-      <a href="/new-item" class="box-link waves-effect waves-light">
-        <div class="row valign-wrapper sidebar-item">
-          <div class="col s12 m8 hide-on-small-only	">
-            Add an Item
-          </div>
-          <div class="col s12 m4">
-            <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
-              <i class="material-icons center-align">add</i>
             </div>
           </div>
+        </li>
+        {% else %}
+        <div class="">
+          <h3>No Items Yet.</h3>
+          <a href="/new-item">Add an Item</a>
         </div>
-      </a>
-      <a href="/dashboard" class="box-link waves-effect waves-light">
-        <div class="row valign-wrapper sidebar-item">
-          <div class="col s12 m8 hide-on-small-only">
-            Dashboard
-          </div>
-          <div class="col s12 m4">
-            <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
-              <i class="material-icons center-align">dashboard</i>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="cell sidebar grey lighten-3 z-depth-1">
+      <div class="sticky">
+        <a href="/new-item" class="box-link waves-effect waves-light">
+          <div class="row valign-wrapper sidebar-item">
+            <div class="col s12 m8 hide-on-small-only	">
+              Add an Item
+            </div>
+            <div class="col s12 m4">
+              <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                <i class="material-icons center-align">add</i>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-      <a href="/profile" class="box-link waves-effect waves-light">
-        <div class="row valign-wrapper sidebar-item">
-          <div class="col s12 m8 hide-on-small-only	">
-            Profile
+        </a>
+        <a href="/dashboard" class="box-link waves-effect waves-light">
+          <div class="row valign-wrapper sidebar-item">
+            <div class="col s12 m8 hide-on-small-only">
+              Dashboard
+            </div>
+            <div class="col s12 m4">
+              <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                <i class="material-icons center-align">dashboard</i>
+              </div>
+            </div>
           </div>
-          <div class="col s12 m4">
-            <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
-              <i class="material-icons center-align">account_circle</i>
+        </a>
+        <a href="/profile" class="box-link waves-effect waves-light">
+          <div class="row valign-wrapper sidebar-item">
+            <div class="col s12 m8 hide-on-small-only	">
+              Profile
+            </div>
+            <div class="col s12 m4">
+              <div class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                <i class="material-icons center-align">account_circle</i>
+              </div>
+            </div>
           </div>
-          </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   </div>
 </div>
-</div>
 
-{% include 'components/amazon-item-modal.html'%}
-{% include 'components/delete-modal.html'%}
-{% endblock%}
+{% include 'components/amazon-item-modal.html'%} {% include 'components/delete-modal.html'%} {% endblock%}
 
 <!-- ###################################################################### -->
 <!--                                 ENDTEMPLATE                            -->

@@ -51,6 +51,7 @@ module.exports = function(app, passport) {
 
 	// PROFILE SECTION =========================
 	app.get('/profile', isLoggedIn, function(req, res) {
+		console.log(req)
 		User.findOne(req.user, (err, user) => {
 			if(err) {
 				console.log(err)
@@ -284,6 +285,7 @@ module.exports = function(app, passport) {
   app.post('/new-room', Upload.addRoom);
   // AMAZON TO ITEM UPDATE
   app.get('/amazon/', amazon.amazonToItem);
+	app.get('/amazon/delete', amazon.notMyItem);
 
   // DELETE ROOM
 

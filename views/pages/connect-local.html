@@ -23,9 +23,10 @@
 
     <h1><span class="fa fa-user"></span> Add Local Account</h1>
 
-    <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-    <% } %>
+    {% if (message.length > 0) %}
+        <div class="alert alert-danger">{{message}}</div>
+    {% else %}
+    {% endif %}
 
     <!-- LOGIN FORM -->
     <form action="/connect/local" method="post">

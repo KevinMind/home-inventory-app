@@ -126,3 +126,21 @@ exports.amazonToItem = (req, res) => {
   })
 
 };
+
+exports.notMyItem = (req, res) => {
+  let id = req.param('id')
+  Item.findOne({
+    _id: id
+  }, (err, item) => {
+    if(err) {
+      console.log(err)
+    } else {
+      item.amazonified = false
+      item.amazonData = []
+      item.save((err, result) => {
+        if (err) console.log(err)
+        else res.redirect("/items?id=" + id)
+      })
+    }
+  })
+};
