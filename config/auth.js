@@ -6,7 +6,7 @@ module.exports = {
     'facebookAuth' : {
         'clientID'      : process.env.FACEBOOK_APP_ID, // your App ID
         'clientSecret'  : process.env.FACEBOOK_SECRET, // your App Secret
-        'callbackURL'   : '/facebook/callback'
+        'callbackURL'   : 'auth/facebook/callback'
     },
 
     'twitterAuth' : {
