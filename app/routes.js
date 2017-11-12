@@ -284,6 +284,7 @@ module.exports = function(app, passport) {
   app.post('/new-room', Upload.addRoom);
   // AMAZON TO ITEM UPDATE
   app.get('/amazon/', amazon.amazonToItem);
+	app.get('/amazon/delete', amazon.notMyItem);
 
   // DELETE ROOM
 

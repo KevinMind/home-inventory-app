@@ -6,19 +6,19 @@ module.exports = {
     'facebookAuth' : {
         'clientID'      : process.env.FACEBOOK_APP_ID, // your App ID
         'clientSecret'  : process.env.FACEBOOK_SECRET, // your App Secret
-        'callbackURL'   : 'https://hiapp.io/auth/facebook/callback'
+        'callbackURL'   : '/facebook/callback'
     },
 
     'twitterAuth' : {
         'consumerKey'       : process.env.TWITTER_CONSUMER_KEY,
         'consumerSecret'    : process.env.TWITTER_CONSUMER_SECRET,
-        'callbackURL'       : 'https://hiapp.io/auth/twitter/callback'
+        'callbackURL'       : '/auth/twitter/callback'
     },
 
     'googleAuth' : {
         'clientID'      : process.env.GOOGLE_CLIENT_ID,
         'clientSecret'  : process.env.GOOGLE_CLIENT_SECRET,
-        'callbackURL'   : 'https://hiapp.io/auth/google/callback'
+        'callbackURL'   : '/auth/google/callback'
     }
 
 };
