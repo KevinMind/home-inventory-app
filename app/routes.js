@@ -51,6 +51,7 @@ module.exports = function(app, passport) {
 
 	// PROFILE SECTION =========================
 	app.get('/profile', isLoggedIn, function(req, res) {
+		console.log(req)
 		User.findOne(req.user, (err, user) => {
 			if(err) {
 				console.log(err)
