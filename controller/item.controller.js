@@ -13,21 +13,23 @@ exports.createItem = (callback) => {
 
       var newItem = new Item();
       newItem.name = payload.name;
-      newItem.uuid=  newItem.genUuid();
-      newItem.amazonified=  payload.amazonified;
-      newItem.quantity= payload.quantity;
-      newItem.photo= payload.photo;
-      newItem.length= payload.length;
-      newItem.width= payload.width;
-      newItem.height= payload.height;
-      newItem.age= payload.age;
-      newItem.store= payload.store;
-      newItem.brand= payload.brand;
-      newItem.model= payload.model;
-      newItem.serial= payload.serial;
-      newItem.cost= payload.cost;
+      newItem.user = user._id;
+      newItem.amazonified =  payload.amazonified;
+      newItem.quantity = payload.quantity;
+      newItem.photo = payload.photo;
+      newItem.length = payload.length;
+      newItem.width = payload.width;
+      newItem.height = payload.height;
+      newItem.age = payload.age;
+      newItem.store = payload.store;
+      newItem.brand = payload.brand;
+      newItem.model = payload.model;
+      newItem.serial = payload.serial;
+      newItem.cost = payload.cost;
       // user.items= []
-      user.items.push(newItem);
+
+
+      user.items.push(newItem._id);
       user.save((err) => {
         if(err) throw err
       })
@@ -47,7 +49,7 @@ exports.createItem = (callback) => {
 // Update Item
 
 const updateItem = (callback) => {
-  Item.update({uuid: data.uuid}, {
+  Item.update({_id: data._id}, {
     $set: {
       'name': data.name,
       'quantity': data.quantity,
@@ -101,7 +103,26 @@ exports.deleteItem = (req, res, next) => {
             if(err) {
               console.log(err)
             } else {
-              console.log(user.items)
+              items = user.items
+              items.forEach((item) =>{
+                console.log("item: ", item, " id: ", id)
+                if(item == id) {
+                  let index = items.indexOf(item)
+                  console.log("item indexed at position: ", index)
+                  items.splice(index, 1)
+                  console.log(items)
+                  user.items = items
+                  user.save((errr, result) => {
+                    if(err) {
+                      console.log(err)
+                    } else {
+                      return result
+                    }
+                  })
+
+                }
+
+              })
               res.render('pages/deleted.html', {"item": result})
             }
           })
