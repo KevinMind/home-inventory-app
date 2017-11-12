@@ -255,7 +255,7 @@ module.exports = function(app, passport) {
 
   // EDIT SINGLE ITEM
   app.get('/items/:slug', function(req, res) {
-    Item.findOne({uuid : req.params.slug}, function(err, document) {
+    Item.findOne({_id : req.params.slug}, function(err, document) {
       if(err) {
         console.log(err)
       } else {
@@ -283,7 +283,7 @@ module.exports = function(app, passport) {
   // ADD NEW ROOM
   app.post('/new-room', Upload.addRoom);
   // AMAZON TO ITEM UPDATE
-  app.get('/amazon/:slug', amazon.amazonToItem);
+  app.get('/amazon/', amazon.amazonToItem);
 
   // DELETE ROOM
 

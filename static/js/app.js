@@ -34,9 +34,10 @@ $(document).ready(function() {
   $('.parallax').parallax();
   $('.modal').modal({
     opacity: .5, // Opacity of modal background
-    startingTop: "5%",
-    endingTop: "25%"
   });
+  $('.carousel').carousel();
+  console.log("done carouselling")
+
 
 $(".collapsible-header").click(function(event) {
   if($(this).parent().hasClass("active")) {
@@ -78,6 +79,20 @@ $(window).scroll(function() {
 });
 
 });
+
+$(".thatsMyItem").click(function(event) {
+  console.log("modallllll")
+  var title = $(this).data("title")
+  var price = $(this).data("price")
+  var image = $(this).data("image")
+  var url = "/amazon?" + "id=" + $(this).data("item") + "&" + "asin=" + $(this).data("asin")
+  $("#amazonItemTitle").html(title)
+  $("#amazonItemPrice").html(price)
+  $("#amazonItemImage").attr('src', image)
+  $("#amazonItemAsin").attr('href', url)
+  $('#thatsMyItem').modal('open');
+})
+
 
 
 google.charts.load('current', {'packages':['corechart']});

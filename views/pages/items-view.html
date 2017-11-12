@@ -90,17 +90,28 @@
               </div>
               <div class="item-buttons">
                 {% if item.amazonified %}
-                <ul>
-                  <li><a href="{{item.amazonData.url}}">View On Amazon</a></li>
-                  <li>ASIN:{{item.amazonData.asin}}</li>
-                  <li>Brand: {{item.amazonData.brand}}</li>
-                  <li>Dimensions: {{item.amazonData.length}}" x {{item.amazonData.width}}" x {{item.amazonData.height}}"</li>
-                  <li>Manufacturer: {{item.amazonData.manufacturer}}</li>
-                  <li>Model: {{item.amazonData.model}}</li>
-                  <li>Price: {{item.amazonData.upc}}</li>
-                  <li>Cost: {{item.amazonData.cost}}</li>
-                  <li><a href="/amazon/{{item._id}}" role="button" class="waves-effect waves-light yellow btn amber lighten-1"name="">Update Item</a></li>
-                </ul>
+                <div class="carousel center image-container z-depth-1" data-indicators="true">
+                    {% for item in item.amazonData %}
+                    <div class="carousel-item" style="
+                    background: white;
+                    height:350px;
+                    border: 2px solid #ffbc74"
+                    href="#one!">
+                      <p>{{item.title}}</p>
+                      <p>Price: ${{item.cost}}</p>
+                      <p>{{item.itemId}}</p>
+                      <a class="waves-effect waves-light btn thatsMyItem" data-item="{{item.itemId}}" data-asin="{{item.asin}}" data-price="{{item.cost}}" data-title="{{item.title}}" data-image="{{item.image}}">That's My Item</a>
+                      <img id="amazonDataImage" src="{{item.image}}" alt="" style="
+                      background-image:url('{{item.image}}');
+                      background-position: center;
+                      background-repeat: no-repeat;
+                      background: #0000001c;"
+                      height="auto"
+                      width="auto"
+                      >
+                    </div>
+                    {% endfor %}
+                </div>
                 {% else %}
                 <form class="" action="/amazon" method="post">
                   <input type="hidden" name="_id" value="{{item._id}}">
@@ -165,6 +176,8 @@
   </div>
 </div>
 </div>
+
+{% include 'components/amazon-item-modal.html'%}
 {% include 'components/delete-modal.html'%}
 {% endblock%}
 
