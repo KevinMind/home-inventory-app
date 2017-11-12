@@ -27,7 +27,7 @@
         <li class="list-item" id="{{item._id}}">
           <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
             <div class="col s3 itemName">{{item.name}}</div>
-            <div class="col s3 itemRoom">{{item.amazonified}}</div>
+            <div class="col s3 itemRoom">{{item.room}}</div>
             <div class="col s3 itemQuant">{{item.quantity}}</div>
             <div class="col s3 item-image-container">
               <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
@@ -35,13 +35,9 @@
           </div>
           <div class="collapsible-body item-body">
             <div class="row">
-              <div class="col s12 m6">
+              <div class="col s12 m5">
                 <table class="bordered">
                   <tbody>
-                    <tr>
-                      <td>_Id: </td>
-                      <td>{{item._id}}</td>
-                    </tr>
                     <tr>
                       <td>Dimensions: </td>
                       <td>{{item.length}}" x {{item.width}}" x {{item.height}}""</td>
@@ -74,7 +70,7 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col s12 m6 item-full-image">
+              <div class="col s12 m7 item-full-image">
                 <div class="image-container z-depth-1">
                   <img class="responsive-img" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
                 </div>
@@ -87,21 +83,18 @@
                   <a href="/amazon/delete?id={{item._id}}">Clear Search Results</a>
                 </div>
                 <div class="item-buttons">
-                  <div class="carousel center image-container z-depth-1" data-indicators="true">
+                  <div class="carousel center z-depth-1" data-indicators="true">
                     {% for item in item.amazonData %}
                     <div class="carousel-item" style="
+                    min-height: 600px;
+                    padding: 1rem;
                     background: white;
-                    height:350px;
                     border: 2px solid #ffbc74" href="#one!">
-                      <p>{{item.title}}</p>
+                      {% set title = item.title%}
+                      <a class="waves-effect waves-light btn thatsMyItem" data-item="{{item.itemId}}" data-asin="{{item.asin}}" data-price="{{item.cost}}" data-title="{{item.title}}" data-image="{{item.image}}">Select</a>
+                      <p>{{title | string |truncate(50) }}</p>
                       <p>Price: ${{item.cost}}</p>
-                      <p>{{item.itemId}}</p>
-                      <a class="waves-effect waves-light btn thatsMyItem" data-item="{{item.itemId}}" data-asin="{{item.asin}}" data-price="{{item.cost}}" data-title="{{item.title}}" data-image="{{item.image}}">That's My Item</a>
-                      <img id="amazonDataImage" src="{{item.image}}" alt="" style="
-                      background-image:url('{{item.image}}');
-                      background-position: center;
-                      background-repeat: no-repeat;
-                      background: #0000001c;" height="auto" width="auto">
+                      <img id="amazonDataImage" src="{{item.image}}" alt="" height="60px" width="auto" class='responsive-img'>
                     </div>
                     {% endfor %}
                   </div>

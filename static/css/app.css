@@ -6,6 +6,18 @@ nav {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1)
 }
 
+.indicator-item {
+  border: 2px solid rgb(255, 188, 116);
+  background: white;
+  width: 12px !important;
+  height: 12px !important;
+  background-color: rgb(255,188,116) !important;
+}
+
+.indicator-item.active {
+  background-color: white !important;
+}
+
 .money-text {
   color: green;
   font-size: 2rem;
