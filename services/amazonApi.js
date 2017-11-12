@@ -111,6 +111,9 @@ exports.amazonToItem = (req, res) => {
           item.height = amazonItem.height;
           item.model = amazonItem.model;
           item.cost = amazonItem.cost;
+          item.length = (amazonItem.itemDimLengthValue/100);
+          item.width = (amazonItem.itemDimWidthValue/100);
+          item.height = (amazonItem.itemDimHeightValue/100);
         }
       })
 
