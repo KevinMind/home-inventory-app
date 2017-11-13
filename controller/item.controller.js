@@ -1,6 +1,9 @@
 const Item = require('../app/models/item');
 const User = require('../app/models/user')
+const Room = require('../app/models/room')
 const async = require('async')
+const uuidv4 = require('uuid/v4');
+
 
 
 // Create Item
@@ -14,6 +17,7 @@ exports.createItem = (callback) => {
       var newItem = new Item();
       newItem.name = payload.name;
       newItem.user = user._id;
+      newItem.room = payload.room;
       newItem.amazonified =  payload.amazonified;
       newItem.quantity = payload.quantity;
       newItem.photo = payload.photo;
@@ -130,6 +134,30 @@ exports.deleteItem = (req, res, next) => {
       })
     }
   });
+}
+
+exports.addRoom = (req, res) => {
+  let id = req.user._id
+  var room = new Room();
+
+  room.name = req.body.name;
+  room.items = []
+  room.user = id;
+
+  User.findById(id,(err, user) => {
+    if(err) {
+      return err
+    } else {
+      user.rooms.unshift(room._id)
+    }
+    user.save((err, result ) => {
+      if(err) return err
+      room.save((err, result) => {
+        if(err) return err
+        else res.redirect('/new-item')
+      })
+    })
+  })
 }
 
 

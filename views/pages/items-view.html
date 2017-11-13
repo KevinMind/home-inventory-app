@@ -27,7 +27,14 @@
         <li class="list-item" id="{{item._id}}">
           <div class="collapsible-header row item-list-header" data-id="{{item._id}}" data-scroll="{{item._id}}">
             <div class="col s3 itemName">{{item.name}}</div>
-            <div class="col s3 itemRoom">{{item.room}}</div>
+            <div class="col s3 itemRoom">
+              {% for room in rooms %}
+              {% if room._id == item.room %}
+                {{room.name}}
+              {% else %}
+              {% endif %}
+              {% endfor %}
+            </div>
             <div class="col s3 itemQuant">{{item.quantity}}</div>
             <div class="col s3 item-image-container">
               <img height="40" class="" src="https://s3.us-east-1.amazonaws.com/uploads.hiapp.io/{{item.photo}}" alt="">
@@ -82,22 +89,22 @@
                 <div class="item-buttons">
                   <a href="/amazon/delete?id={{item._id}}">Clear Search Results</a>
                 </div>
-                <div class="item-buttons">
-                  <div class="carousel center z-depth-1" data-indicators="true">
-                    {% for item in item.amazonData %}
-                    <div class="carousel-item" style="
-                    min-height: 600px;
-                    padding: 1rem;
-                    background: white;
-                    border: 2px solid #ffbc74" href="#one!">
-                      {% set title = item.title%}
-                      <a class="waves-effect waves-light btn thatsMyItem" data-item="{{item.itemId}}" data-asin="{{item.asin}}" data-price="{{item.cost}}" data-title="{{item.title}}" data-image="{{item.image}}">Select</a>
-                      <p>{{title | string |truncate(50) }}</p>
-                      <p>Price: ${{item.cost}}</p>
-                      <img id="amazonDataImage" src="{{item.image}}" alt="" height="60px" width="auto" class='responsive-img'>
+                <div class="carousel carousel-slider center z-depth-1" style="min-height:400px !important" data-indicators="true">
+                  {% for item in item.amazonData %}
+                  <div class="carousel-item white" href="#one!">
+                    <div class="row amazon__carousel">
+                      <div class="col s12 m6">
+                        {% set title = item.title%}
+                        <h2>{{title | string |truncate(50) }}</h2>
+                        <p>Price: ${{item.cost}}</p>
+                      </div>
+                      <div class="col s12 m6">
+                        <img id="amazonDataImage" src="{{item.image}}" alt="" class='responsive-img'>
+                        <a class="waves-effect waves-light btn thatsMyItem" data-item="{{item.itemId}}" data-asin="{{item.asin}}" data-price="{{item.cost}}" data-title="{{item.title}}" data-image="{{item.image}}">Select</a>
+                      </div>
                     </div>
-                    {% endfor %}
                   </div>
+                {% endfor %}
                 </div>
                 {% else %}
                 <div class="item-buttons">
@@ -160,6 +167,50 @@
             </div>
           </div>
         </a>
+        <div class="container hide-on-small-only">
+          <div class="row">
+            <div class="col s12">
+              <h5>Total: 12 Items</h5>
+              <h5>$598.00</h5>
+            </div>
+          </div>
+          <div class="row">
+            <table class="responsive-tabl">
+              <thead>
+                <tr>
+                    <th>Room</th>
+                    <th># items</th>
+                    <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for room in rooms %}
+                <tr>
+                  <td>{{room.name}}</td>
+                  <td>
+                    {% for item in items %}
+                      {% if item.room == room._id %}
+                        {{item.quantity}}
+                        {% else %}
+                        0
+                      {% endif %}
+                    {% endfor %}
+                  </td>
+                  <td>
+                    {% for item in items %}
+                      {% if item.room == room._id %}
+                        {{item.cost}}
+                        {% else %}
+                        0
+                      {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -14,6 +14,14 @@ nav {
   background-color: rgb(255,188,116) !important;
 }
 
+.amazon__carousel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .indicator-item.active {
   background-color: white !important;
 }

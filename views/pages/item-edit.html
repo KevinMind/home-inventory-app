@@ -52,7 +52,7 @@
                <select name="room" id="roomSelect">
                  <option value="" disabled selected><a href="modal1">Select a Room</a></option>
                  {% for room in rooms %}
-                 <option value="{{room.uuid}}">{{room.name}}</option>
+                 <option value="{{room._id}}">{{room.name}}</option>
                  {% endfor %}
                  <option value="0">Add a room +</option>
                </select>

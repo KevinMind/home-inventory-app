@@ -8,6 +8,7 @@ const uuid = require('uuid/v4')
 var itemSchema = mongoose.Schema({
   name: String,
   user: String,
+  room: String,
   amazonified: Boolean,
   quantity: Number,
   photo: String,

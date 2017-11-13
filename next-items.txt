@@ -1,13 +1,12 @@
-DONE1. add "not my item button" 
-	- opens modal describing why amazonify would return incorrect information. 
+DONE1. add "not my item button"
+	- opens modal describing why amazonify would return incorrect information.
 	- gives option to delete amazonify info which directs user to update item with more details, then re-amazonifies the data
-2. fix user authentication bug, create long term cookie.
+NOT SURE2. fix user authentication bug, create long term cookie.
 3. create basic aggregation data
 	- total value of items
 	-total value per room
 	-average value per category
 4. create amazon wishlist of items,
 5. create csv file from data
-DONE6. update amazon api to return up to 5 items. 
+DONE6. update amazon api to return up to 5 items.
 7. add image scanning feature to increase info about item before amazonify.
-

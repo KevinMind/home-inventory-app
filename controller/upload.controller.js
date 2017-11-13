@@ -77,7 +77,6 @@ exports.newItem = (req, res, next) => {
 
   payload = {
     'name': req.body.name,
-    'uuid': uuidv4(),
     'amazonified': false,
     'quantity': req.body.quantity,
     'room': data.room,
@@ -103,23 +102,6 @@ exports.newItem = (req, res, next) => {
     }
   )
 };
-
-
-exports.addRoom = (req, res) => {
-  payload = {
-    "name": req.body.name,
-    "uuid": uuidv4()
-  }
-  db.collection('rooms').save(payload, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("added room")
-      }
-  });
-  res.redirect("/new-item")
-
-}
 
 
 exports.displayForm = (req, res) => {
