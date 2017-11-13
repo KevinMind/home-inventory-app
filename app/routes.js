@@ -5,10 +5,11 @@ const multipartMiddleware = multipart()
 // Models
 const Item = require('./models/item')
 const User = require('./models/user')
+const Room = require('./models/room')
 
 // Controllers
 const amazon = require('../services/amazonApi')
-const itemUploader = require('../controller/item.controller')
+const itemController = require('../controller/item.controller')
 const Upload = require('../controller/upload.controller')
 
 module.exports = function(app, passport) {
@@ -44,6 +45,7 @@ module.exports = function(app, passport) {
 		})
 	})
 
+	// ITEMS
 	app.get('/admin/items', (req, res) => {
 		Item.find({}, (err, items) => {
 			if(err) console.log(err)
@@ -57,6 +59,23 @@ module.exports = function(app, passport) {
 			else res.redirect('/admin/items')
 		})
 	})
+
+	// ROOMS
+	app.get('/admin/rooms', (req, res) => {
+		Room.find({}, (err, rooms) => {
+			if(err) console.log(err)
+			else res.send(rooms)
+		})
+	})
+
+	app.get('/admin/rooms/delete', (req, res) => {
+		Room.remove({}, (err, result) => {
+			if(err) console.log(err)
+			else res.redirect('/admin/rooms')
+		})
+	})
+
+
 
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
@@ -251,12 +270,22 @@ module.exports = function(app, passport) {
 
   // VIEW ALL ITEMS
   app.get('/items', isLoggedIn, function(req, res) {
-		console.log(req.user._id)
+		var id = req.user._id
 		Item.find({
-			user: req.user._id
-		}, (err, results) => {
-			if(err) console.log(err)
-			else res.render('pages/items-view.html', {"items": results})
+			user: id
+		}, (err, items) => {
+			if(err){
+				console.log(err)
+			}
+			else {
+				Room.find({user: id}, (err, rooms) => {
+					if(err) {
+						console.log(err)
+					} else {
+						res.render('pages/items-view.html', {"items": items, "rooms": rooms})
+					}
+				})
+		}
 		});
   });
 
@@ -270,25 +299,47 @@ module.exports = function(app, passport) {
 
   // EDIT SINGLE ITEM
   app.get('/items/:slug', function(req, res) {
-    Item.findOne({_id : req.params.slug}, function(err, document) {
-      if(err) {
-        console.log(err)
-      } else {
-        res.render("pages/item-edit.html", {"item": document});
-      }
-    });
+		var id = req.user._id
+		Room.find({user: id}, (err, rooms) => {
+			console.log(rooms)
+			if(err) {
+				return err
+			} else {
+				Item.findOne({_id : req.params.slug}, function(err, item) {
+					if(err) {
+						console.log(err)
+					} else {
+						res.render("pages/item-edit.html", {"item": item, "rooms": rooms});
+					}
+				});
+			}
+		})
+
   });
 
   // UPDATE SINGLE ITEM
-  app.post('/items/:slug', multipartMiddleware, itemUploader.updateItem);
+  app.post('/items/:slug', multipartMiddleware, itemController.updateItem);
 
   // VIEW NEW ITEM FORM
   app.get('/new-item', isLoggedIn, function(req, res) {
-		res.render('pages/items-add.html', {})
+		User.findById(req.user, (err, user) => {
+			if(err) {
+				return err
+			} else {
+				// var user = user
+				Room.find({user: user._id}, (err, rooms) => {
+					if(err) {
+						console.log(err)
+					} else {
+						res.render('pages/items-add.html', {"rooms": rooms, "user": user})
+					}
+				})
+			}
+		})
   });
 
   // DELETE ITEM
-  app.get('/delete/:slug', multipartMiddleware, itemUploader.deleteItem);
+  app.get('/delete/:slug', multipartMiddleware, itemController.deleteItem);
 
   // CREATE ITEM
   app.post('/new-item', multipartMiddleware, Upload.newItem)
@@ -296,7 +347,7 @@ module.exports = function(app, passport) {
   // AMAZONIFY
   app.post('/amazon', amazon.itemSearch);
   // ADD NEW ROOM
-  app.post('/new-room', Upload.addRoom);
+  app.post('/new-room', itemController.addRoom);
   // AMAZON TO ITEM UPDATE
   app.get('/amazon/', amazon.amazonToItem);
 	app.get('/amazon/delete', amazon.notMyItem);

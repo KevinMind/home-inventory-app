@@ -35,7 +35,7 @@ $(document).ready(function() {
   $('.modal').modal({
     opacity: .5, // Opacity of modal background
   });
-  $('.carousel').carousel();
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
   console.log("done carouselling")
 
 
